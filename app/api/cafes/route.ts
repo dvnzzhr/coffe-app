@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import type { CafeImage, Prisma, Submission, User } from '@prisma/client'
+import { getCafeEmbedding } from '@/lib/gemini'
 
 type SubmissionWithImages = Submission & { images: CafeImage[] }
 type FoursquareCategory = {
@@ -171,6 +172,21 @@ const isFoursquareCafePlace = (place: FoursquarePlace) => {
   if (hasCafeCategory(place.categories)) return true
 
   return textIncludesAny(normalizedName, cafeNameWords)
+}
+
+
+function getCosineSimilarity(vecA: number[], vecB: number[]) {
+  if (!vecA || !vecB || vecA.length !== vecB.length) return 0;
+  let dotProduct = 0;
+  let normA = 0;
+  let normB = 0;
+  for (let i = 0; i < vecA.length; i++) {
+    dotProduct += vecA[i] * vecB[i];
+    normA += vecA[i] * vecA[i];
+    normB += vecB[i] * vecB[i];
+  }
+  if (normA === 0 || normB === 0) return 0;
+  return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
 }
 
 const normalizeRating = (rating?: number) => {

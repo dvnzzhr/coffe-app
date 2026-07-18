@@ -46,6 +46,7 @@ model Submission {
   images    CafeImage[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  embeddingData Json?
 }
 
 model CafeImage {

@@ -371,27 +371,78 @@ export default function MapComponent({ dbCafes, keywordMapping }: MapComponentPr
     // Sort by relevance then distance
     const normalized = unique
       .map((item: any) => {
-        // Calculate word-based relevance score
+        // Calculate Omni-Search word-based relevance score
         const name = (item.name || item.cafeName || '').toLowerCase()
+        const address = (item.address || item.location?.address || '').toLowerCase()
+        const facilities = (item.facilities || '').toLowerCase()
+        const ambiance = (item.ambiance || '').toLowerCase()
+        const desc = (item.description || '').toLowerCase()
+        
+        let categoryText = ''
+        if (Array.isArray(item.categories)) {
+          categoryText = item.categories.map((c: any) => `${c.name || ''} ${c.short_name || ''}`).join(' ').toLowerCase()
+        }
+
         const q = mapped.toLowerCase()
-        const queryWords = q.split(/\s+/).filter(w => w.length > 0)
+        const rawWords = q.split(/\s+/).filter(w => w.length > 0)
+        
+        // NLP Dictionaries 
+        const ignoredTokens = new Set(['cafe', 'kafe', 'coffee', 'kopi', 'shop', 'untuk', 'buat', 'tempat', 'yang', 'di', 'ke', 'dari', 'dan', 'atau', 'dengan', 'ada', 'bisa', 'cocok', 'cari', 'rekomendasi', 'nyari', 'bagus', 'enak'])
+        const synonyms: Record<string, string[]> = {
+          nugas: ['wifi', 'coworking', 'quiet', 'work-friendly', 'tugas', 'kerja', 'wfc', 'colokan'],
+          belajar: ['wifi', 'coworking', 'quiet', 'colokan', 'study'],
+          estetik: ['aesthetic', 'instagrammable', 'instagramable', 'foto'],
+          aesthetic: ['aesthetic', 'instagrammable', 'estetik', 'foto'],
+          murah: ['cheap', 'affordable', 'terjangkau'],
+          nongkrong: ['santai', 'cozy', 'outdoor', 'nyaman', 'live music'],
+          meeting: ['rapat', 'indoor', 'coworking'],
+          nyaman: ['cozy', 'santai', 'homey']
+        }
+
+        const expandedWords = new Set<string>()
+        rawWords.forEach(w => {
+           if (!ignoredTokens.has(w)) {
+              expandedWords.add(w)
+              if (synonyms[w]) synonyms[w].forEach(syn => expandedWords.add(syn))
+           }
+        })
+        const queryWords = Array.from(expandedWords)
+
+        // The Omni corpus includes all searchable attributes
+        const omniCorpus = `${name} ${address} ${facilities} ${ambiance} ${desc} ${categoryText}`
 
         let relevance = 0
+        
+        // Exact name match gets highest score
         if (name === q) {
           relevance = 100
-        } else if (name.startsWith(q)) {
+        } 
+        else if (name.startsWith(q)) {
           relevance = 90
-        } else {
-          // Count how many query words match
-          let matches = 0
+        } 
+        else {
+          let nameMatches = 0
+          let corpusMatches = 0
+          
           queryWords.forEach(word => {
-            if (name.includes(word)) matches++
+            if (name.includes(word)) nameMatches++
+            else if (omniCorpus.includes(word)) corpusMatches++
           })
 
-          if (matches > 0) {
-            // Score based on percentage of words matched
-            relevance = (matches / queryWords.length) * 80
+          if (nameMatches > 0 || corpusMatches > 0) {
+            // Heavy weight on name matches (up to 80), medium weight on corpus matches (up to 60)
+            const nameScore = (nameMatches / queryWords.length) * 80
+            const corpusScore = (corpusMatches / queryWords.length) * 60
+            
+            // Total score combines both but caps at 85 so exact matches strictly win
+            relevance = Math.min(85, nameScore + corpusScore)
           }
+        }
+        
+        // --- AI Semantic Boost Factor ---
+        if (typeof item.aiScore === 'number' && item.aiScore > 0) {
+           // We blend semantic matching to overpower weak textual matching
+           relevance = Math.max(relevance, item.aiScore)
         }
 
         return {
