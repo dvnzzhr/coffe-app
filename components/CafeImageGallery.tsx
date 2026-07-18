@@ -28,9 +28,9 @@ export default function CafeImageGallery({ images, cafeName }: CafeImageGalleryP
 
   if (!hasImages) {
     return (
-      <div className="flex h-80 flex-col items-center justify-center gap-3 bg-blue-50 text-blue-500">
+      <div className="flex h-80 flex-col items-center justify-center gap-3 bg-pink-50 text-pink-500">
         <ImageIcon size={48} />
-        <p className="text-sm font-bold text-blue-400">Belum ada foto cafe.</p>
+        <p className="text-sm font-bold text-pink-400">Belum ada foto cafe.</p>
       </div>
     )
   }
@@ -78,7 +78,7 @@ export default function CafeImageGallery({ images, cafeName }: CafeImageGalleryP
               key={image.id}
               type="button"
               onClick={() => setActiveIndex(index)}
-              className={`h-16 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition-all ${index === activeIndex ? "border-blue-500 ring-2 ring-blue-100" : "border-transparent opacity-70 hover:opacity-100"
+              className={`h-16 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition-all ${index === activeIndex ? "border-pink-500 ring-2 ring-pink-100" : "border-transparent opacity-70 hover:opacity-100"
                 }`}
               aria-label={`Tampilkan gambar ${index + 1}`}
             >

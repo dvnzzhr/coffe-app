@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react'
-import { ShieldCheck, Star, Sparkles, Loader2 } from 'lucide-react'
+import { ShieldCheck, Star, Sparkles, Loader2, Wifi, Wind, Coffee, Search } from 'lucide-react'
 import SearchBar from './SearchBar'
 
 interface MapSidebarProps {
@@ -96,7 +96,7 @@ export default function MapSidebar({
 
       <div className="p-3 lg:p-4 flex flex-col h-full min-w-[320px]">
         <h1 className="text-lg lg:text-xl font-bold text-slate-700 mb-2 lg:mb-4">
-          Café Recommendation ☕
+          Café Recommendation
         </h1>
 
         <div className="mb-4">
@@ -106,7 +106,7 @@ export default function MapSidebar({
                 setSearchMode('surabaya')
               }}
               className={`flex-1 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all ${searchMode === 'surabaya'
-                ? 'bg-white text-blue-600 shadow-sm border border-blue-100'
+                ? 'bg-white text-pink-600 shadow-sm border border-pink-100'
                 : 'text-slate-400 hover:text-slate-600'
                 }`}
             >
@@ -117,7 +117,7 @@ export default function MapSidebar({
                 setSearchMode('current')
               }}
               className={`flex-1 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all ${searchMode === 'current'
-                ? 'bg-white text-blue-600 shadow-sm border border-blue-100'
+                ? 'bg-white text-pink-600 shadow-sm border border-pink-100'
                 : 'text-slate-400 hover:text-slate-600'
                 }`}
             >
@@ -147,7 +147,7 @@ export default function MapSidebar({
                   setShowSuggestions(false)
                 }}
                 className={`px-3 py-2 rounded-full text-sm transition-all ${query === item
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-200'
+                  ? 'bg-pink-600 text-white shadow-md shadow-pink-200'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                   }`}
               >
@@ -159,21 +159,21 @@ export default function MapSidebar({
           <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t border-slate-100">
             <button
               onClick={() => setFilterRating(!filterRating)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${filterRating ? 'bg-yellow-100 border-yellow-200 text-yellow-700' : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'}`}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border flex items-center gap-1 ${filterRating ? 'bg-yellow-100 border-yellow-200 text-yellow-700' : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'}`}
             >
-              ⭐ Rating 4.0+
+              <Star size={12} fill="currentColor" /> Rating 4.0+
             </button>
             <button
               onClick={() => setFilterWiFi(!filterWiFi)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${filterWiFi ? 'bg-blue-100 border-blue-200 text-blue-700' : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'}`}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border flex items-center gap-1 ${filterWiFi ? 'bg-pink-100 border-pink-200 text-pink-700' : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'}`}
             >
-              📶 Free WiFi
+              <Wifi size={12} /> Free WiFi
             </button>
             <button
               onClick={() => setFilterOutdoor(!filterOutdoor)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${filterOutdoor ? 'bg-green-100 border-green-200 text-green-700' : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'}`}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border flex items-center gap-1 ${filterOutdoor ? 'bg-emerald-100 border-emerald-200 text-emerald-700' : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'}`}
             >
-              🍃 Outdoor/Smoking
+              <Wind size={12} /> Outdoor
             </button>
           </div>
         </div>
@@ -223,15 +223,15 @@ export default function MapSidebar({
                         setMapCenter([cafe.latitude, cafe.longitude])
                       }
                     }}
-                    className={`group overflow-hidden rounded-2xl border bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md ${activeCafeId === String(cafe.id || cafe.fsqPlaceId) ? 'border-blue-400 ring-2 ring-blue-100' : cafe.isBestMatch ? 'border-green-200 ring-1 ring-green-100' : 'border-slate-100'
+                    className={`group overflow-hidden rounded-2xl border bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md ${activeCafeId === String(cafe.id || cafe.fsqPlaceId) ? 'border-pink-400 ring-2 ring-pink-100' : cafe.isBestMatch ? 'border-green-200 ring-1 ring-green-100' : 'border-slate-100'
                       }`}
                   >
                     <div className="aspect-[4/3] bg-slate-100 relative overflow-hidden">
                       {imageUrl ? (
                         <img src={imageUrl} alt="" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                       ) : (
-                        <div className={`h-full w-full flex items-center justify-center text-3xl ${cafe.source === 'foursquare' ? 'bg-blue-100 text-blue-500' : 'bg-orange-100 text-orange-500'}`}>
-                          ☕
+                        <div className={`h-full w-full flex items-center justify-center text-3xl ${cafe.source === 'foursquare' ? 'bg-pink-100 text-pink-500' : 'bg-orange-100 text-orange-500'}`}>
+                          <Coffee size={32} />
                         </div>
                       )}
                       {cafe.isBestMatch && (
@@ -250,7 +250,7 @@ export default function MapSidebar({
                         <h2 className="min-w-0 flex-1 text-xs font-bold leading-snug text-slate-700 line-clamp-2">
                           {cafe.name || cafe.cafeName}
                         </h2>
-                        {cafe.isDb && <ShieldCheck size={12} className="mt-0.5 shrink-0 text-blue-500" />}
+                        {cafe.isDb && <ShieldCheck size={12} className="mt-0.5 shrink-0 text-pink-500" />}
                       </div>
 
                       <p className="mt-1.5 text-[10px] leading-snug text-slate-500 line-clamp-2">
@@ -265,7 +265,7 @@ export default function MapSidebar({
                       )}
 
                       <div className="mt-2 flex items-center gap-2">
-                        <span className={`min-w-0 flex-1 truncate rounded-full px-2 py-1 text-[9px] font-bold ${cafe.source === 'foursquare' ? 'bg-blue-50 text-blue-600' : 'bg-orange-50 text-orange-600'}`}>
+                        <span className={`min-w-0 flex-1 truncate rounded-full px-2 py-1 text-[9px] font-bold ${cafe.source === 'foursquare' ? 'bg-pink-50 text-pink-600' : 'bg-orange-50 text-orange-600'}`}>
                           {cafe.categories?.[0]?.short_name || cafe.categories?.[0]?.name || 'Cafe'}
                         </span>
                         <span className="shrink-0 text-[9px] font-semibold text-slate-400">
@@ -279,7 +279,7 @@ export default function MapSidebar({
                           openCafeDetail(cafe)
                         }}
                         disabled={isOpeningDetail || href === '#'}
-                        className="mt-2 inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-blue-600 px-3 py-2 text-[10px] font-black uppercase tracking-wide text-white transition-colors hover:bg-blue-700 disabled:cursor-wait disabled:bg-blue-400"
+                        className="mt-2 inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-pink-600 px-3 py-2 text-[10px] font-black uppercase tracking-wide text-white transition-colors hover:bg-pink-700 disabled:cursor-wait disabled:bg-pink-400"
                       >
                         {isOpeningDetail && <Loader2 size={12} className="animate-spin" />}
                         {isOpeningDetail ? 'Membuka...' : 'Lihat Detail'}
@@ -291,8 +291,8 @@ export default function MapSidebar({
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center py-12 text-center">
-              <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4 text-2xl">
-                🔍
+              <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
+                <Search size={28} className="text-slate-400" />
               </div>
               <h3 className="font-medium text-slate-600">Tidak ada hasil</h3>
               <p className="text-xs text-slate-400 mt-1">Coba kata kunci lain atau kosongkan untuk melihat semua.</p>

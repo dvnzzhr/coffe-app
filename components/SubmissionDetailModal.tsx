@@ -69,7 +69,7 @@ export default function SubmissionDetailModal({
             {(submission.facilities || "").split(", ").map((item: string) => (
               <span
                 key={item}
-                className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm"
+                className="bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-sm"
               >
                 {item}
               </span>

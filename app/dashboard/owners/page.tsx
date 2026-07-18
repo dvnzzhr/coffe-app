@@ -52,9 +52,9 @@ export default function OwnerDashboard() {
     {
       label: "Total Klik Lokasi",
       value: fmt(stats?.analytics?.clicks ?? 0),
-      icon: <MousePointerClick size={20} className="text-blue-600" />,
-      color: "bg-blue-50",
-      textColor: "text-blue-600"
+      icon: <MousePointerClick size={20} className="text-pink-600" />,
+      color: "bg-pink-50",
+      textColor: "text-pink-600"
     },
     {
       label: "Dilihat di Peta",
@@ -101,7 +101,7 @@ export default function OwnerDashboard() {
         <button
           onClick={loadData}
           disabled={loading}
-          className="flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-blue-600 transition-colors bg-white border border-slate-100 px-4 py-2 rounded-xl shadow-sm"
+          className="flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-pink-600 transition-colors bg-white border border-slate-100 px-4 py-2 rounded-xl shadow-sm"
         >
           <RefreshCw size={14} className={loading ? "animate-spin" : ""} />
           {lastRefresh.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}
@@ -110,7 +110,7 @@ export default function OwnerDashboard() {
 
       {loading ? (
         <div className="flex flex-col items-center justify-center p-24 bg-white rounded-3xl border border-slate-100 shadow-sm">
-          <Loader2 className="animate-spin text-blue-600 mb-4" size={40} />
+          <Loader2 className="animate-spin text-pink-600 mb-4" size={40} />
           <p className="text-slate-400 font-medium">Menghubungkan ke basis data real-time...</p>
         </div>
       ) : (
@@ -134,10 +134,10 @@ export default function OwnerDashboard() {
             <div className="lg:col-span-2 bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
               <div className="flex items-center justify-between mb-8">
                 <h2 className="font-bold text-slate-800 flex items-center gap-2">
-                  <TrendingUp size={20} className="text-blue-600" /> Tren Interaksi Mingguan
+                  <TrendingUp size={20} className="text-pink-600" /> Tren Interaksi Mingguan
                 </h2>
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
+                  <span className="w-2 h-2 bg-pink-500 rounded-full animate-pulse"></span>
                   <span className="text-[10px] font-bold text-slate-400 uppercase">Live</span>
                 </div>
               </div>
@@ -146,11 +146,11 @@ export default function OwnerDashboard() {
                 <div className="h-52 flex items-end justify-between gap-2 px-2">
                   {chartData.map((day, i) => (
                     <div key={i} className="flex flex-col items-center flex-1 group">
-                      <span className="text-[10px] text-blue-600 font-bold mb-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <span className="text-[10px] text-pink-600 font-bold mb-2 opacity-0 group-hover:opacity-100 transition-opacity">
                         {day.count}
                       </span>
                       <div
-                        className="w-full bg-blue-500 hover:bg-blue-600 rounded-t-xl transition-all duration-700 cursor-pointer"
+                        className="w-full bg-pink-500 hover:bg-pink-600 rounded-t-xl transition-all duration-700 cursor-pointer"
                         style={{ height: `${Math.max((day.count / maxChart) * 100, 4)}%` }}
                       />
                       <span className="text-[10px] text-slate-400 mt-2 font-bold capitalize">{day.label}</span>
@@ -170,7 +170,7 @@ export default function OwnerDashboard() {
             <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm flex flex-col">
               <h2 className="font-bold text-slate-800 mb-6 flex items-center justify-between">
                 Titik Terpopuler
-                <ArrowUpRight size={18} className="text-blue-600" />
+                <ArrowUpRight size={18} className="text-pink-600" />
               </h2>
 
               <div className="space-y-5 flex-1">
@@ -179,11 +179,11 @@ export default function OwnerDashboard() {
                     <div key={i} className="flex flex-col">
                       <div className="flex justify-between text-sm mb-2">
                         <span className="font-bold text-slate-700 truncate mr-2">{loc.name}</span>
-                        <span className="text-blue-600 font-bold shrink-0">{loc.clicks} Klik</span>
+                        <span className="text-pink-600 font-bold shrink-0">{loc.clicks} Klik</span>
                       </div>
                       <div className="w-full h-2 bg-slate-50 rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-blue-500 rounded-full transition-all duration-1000"
+                          className="h-full bg-pink-500 rounded-full transition-all duration-1000"
                           style={{
                             width: `${stats.popularity[0].clicks > 0 ? (loc.clicks / stats.popularity[0].clicks) * 100 : 0}%`
                           }}
@@ -209,7 +209,7 @@ export default function OwnerDashboard() {
                   <div className="space-y-2">
                     {stats.myLatest.map((cafe: any) => (
                       <div key={cafe.id} className="flex items-center gap-2 text-sm">
-                        <ShieldCheck size={14} className="text-blue-500 shrink-0" />
+                        <ShieldCheck size={14} className="text-pink-500 shrink-0" />
                         <span className="text-slate-600 font-medium truncate">{cafe.cafeName}</span>
                       </div>
                     ))}
@@ -220,21 +220,21 @@ export default function OwnerDashboard() {
           </div>
 
           {/* CTA Banner */}
-          <div className="mt-8 bg-gradient-to-r from-blue-600 to-indigo-700 p-8 rounded-3xl text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl shadow-blue-500/10">
+          <div className="mt-8 bg-gradient-to-r from-pink-600 to-indigo-700 p-8 rounded-3xl text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl shadow-pink-500/10">
             <div className="flex items-center gap-6">
               <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20">
                 <Store size={32} />
               </div>
               <div>
                 <h3 className="text-xl font-bold">Daftarkan Titik Baru</h3>
-                <p className="text-blue-100 text-sm opacity-80">
+                <p className="text-pink-100 text-sm opacity-80">
                   Perluas jaringan café Anda dan pantau analitik lokasinya secara real-time.
                 </p>
               </div>
             </div>
             <Link
               href="/dashboard/submissions/new"
-              className="px-8 py-3 bg-white text-blue-600 font-bold rounded-xl hover:bg-blue-50 transition-all flex items-center gap-2 text-sm uppercase tracking-wider shrink-0"
+              className="px-8 py-3 bg-white text-pink-600 font-bold rounded-xl hover:bg-pink-50 transition-all flex items-center gap-2 text-sm uppercase tracking-wider shrink-0"
             >
               Buat Pengajuan <ChevronRight size={18} />
             </Link>

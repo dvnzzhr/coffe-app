@@ -46,7 +46,7 @@ export default function RegisterPage() {
           <p className="text-slate-500 leading-relaxed mb-8">
             Akun Owner Anda telah terdaftar. Silakan login untuk mulai mendaftarkan café Anda di peta SIG.
           </p>
-          <div className="flex items-center justify-center gap-2 text-blue-600 font-bold">
+          <div className="flex items-center justify-center gap-2 text-pink-600 font-bold">
             <Loader2 className="animate-spin" size={18} />
             Mengarahkan ke halaman login...
           </div>
@@ -58,7 +58,7 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col md:flex-row">
       {/* Visual Side */}
-      <div className="hidden md:flex md:w-1/2 bg-blue-600 relative overflow-hidden items-center justify-center p-12">
+      <div className="hidden md:flex md:w-1/2 bg-pink-600 relative overflow-hidden items-center justify-center p-12">
         <div className="absolute top-0 left-0 w-full h-full opacity-10">
           <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-white rounded-full blur-[120px]" />
           <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-white rounded-full blur-[120px]" />
@@ -69,9 +69,9 @@ export default function RegisterPage() {
             <MapPin size={32} />
           </div>
           <h2 className="text-5xl font-black mb-6 leading-tight tracking-tight">
-            Digitalkan Café Anda di <span className="text-blue-200">SIG Cafe.</span>
+            Digitalkan Café Anda di <span className="text-pink-200">SIG Cafe.</span>
           </h2>
-          <p className="text-xl text-blue-100 leading-relaxed mb-10">
+          <p className="text-xl text-pink-100 leading-relaxed mb-10">
             Bergabunglah dengan ratusan pemilik café lainnya dan permudah pelanggan menemukan lokasi Anda melalui sistem informasi geografis kami.
           </p>
           
@@ -80,14 +80,14 @@ export default function RegisterPage() {
               <div className="bg-white/10 p-2 rounded-xl mt-1"><CheckCircle2 size={18} /></div>
               <div>
                 <h4 className="font-bold text-white">Visualisasi Peta</h4>
-                <p className="text-sm text-blue-100">Muncul di peta publik dengan marker terverifikasi.</p>
+                <p className="text-sm text-pink-100">Muncul di peta publik dengan marker terverifikasi.</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
               <div className="bg-white/10 p-2 rounded-xl mt-1"><CheckCircle2 size={18} /></div>
               <div>
                 <h4 className="font-bold text-white">Analitik Interaksi</h4>
-                <p className="text-sm text-blue-100">Pantau berapa banyak orang yang melihat dan mencari café Anda.</p>
+                <p className="text-sm text-pink-100">Pantau berapa banyak orang yang melihat dan mencari café Anda.</p>
               </div>
             </div>
           </div>
@@ -97,7 +97,7 @@ export default function RegisterPage() {
       {/* Form Side */}
       <div className="flex-1 flex items-center justify-center p-6 md:p-12">
         <div className="w-full max-w-md">
-          <Link href="/" className="inline-flex items-center gap-2 text-slate-400 hover:text-blue-600 transition-colors mb-12 font-bold text-sm">
+          <Link href="/" className="inline-flex items-center gap-2 text-slate-400 hover:text-pink-600 transition-colors mb-12 font-bold text-sm">
             <ArrowRight size={18} className="rotate-180" /> Kembali ke Beranda
           </Link>
 
@@ -119,14 +119,14 @@ export default function RegisterPage() {
             <div className="space-y-2">
               <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Nama Lengkap</label>
               <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-600 transition-colors">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-pink-600 transition-colors">
                   <User size={20} />
                 </div>
                 <input 
                   type="text" 
                   required
                   placeholder="Contoh: Ahmad Subardjo"
-                  className="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all font-medium text-slate-700"
+                  className="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-2xl focus:ring-4 focus:ring-pink-500/10 focus:border-pink-500 outline-none transition-all font-medium text-slate-700"
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
                 />
@@ -136,14 +136,14 @@ export default function RegisterPage() {
             <div className="space-y-2">
               <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Username</label>
               <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-600 transition-colors">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-pink-600 transition-colors">
                   <Store size={20} />
                 </div>
                 <input 
                   type="text" 
                   required
                   placeholder="username_owner"
-                  className="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all font-medium text-slate-700"
+                  className="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-2xl focus:ring-4 focus:ring-pink-500/10 focus:border-pink-500 outline-none transition-all font-medium text-slate-700"
                   value={formData.username}
                   onChange={(e) => setFormData({...formData, username: e.target.value})}
                 />
@@ -153,14 +153,14 @@ export default function RegisterPage() {
             <div className="space-y-2">
               <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Password</label>
               <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-600 transition-colors">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-pink-600 transition-colors">
                   <Lock size={20} />
                 </div>
                 <input 
                   type="password" 
                   required
                   placeholder="••••••••"
-                  className="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all font-medium text-slate-700"
+                  className="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-2xl focus:ring-4 focus:ring-pink-500/10 focus:border-pink-500 outline-none transition-all font-medium text-slate-700"
                   value={formData.password}
                   onChange={(e) => setFormData({...formData, password: e.target.value})}
                 />
@@ -170,7 +170,7 @@ export default function RegisterPage() {
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-2xl font-bold text-lg shadow-xl shadow-blue-500/20 transition-all flex items-center justify-center gap-3 active:scale-[0.98] disabled:opacity-70"
+              className="w-full bg-pink-600 hover:bg-pink-700 text-white py-4 rounded-2xl font-bold text-lg shadow-xl shadow-pink-500/20 transition-all flex items-center justify-center gap-3 active:scale-[0.98] disabled:opacity-70"
             >
               {loading ? <Loader2 className="animate-spin" size={24} /> : (
                 <>
@@ -181,7 +181,7 @@ export default function RegisterPage() {
           </form>
 
           <p className="text-center mt-8 text-slate-500 font-medium">
-            Sudah punya akun? <Link href="/login" className="text-blue-600 font-bold hover:underline">Masuk di sini</Link>
+            Sudah punya akun? <Link href="/login" className="text-pink-600 font-bold hover:underline">Masuk di sini</Link>
           </p>
         </div>
       </div>

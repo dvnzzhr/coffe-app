@@ -52,7 +52,7 @@ export default function SubmissionList() {
         </div>
         <Link 
           href="/dashboard/submissions/new"
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl shadow-lg shadow-blue-500/20 transition-all font-semibold"
+          className="flex items-center gap-2 bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-xl shadow-lg shadow-pink-500/20 transition-all font-semibold"
         >
           <Plus size={18} /> Tambah Pengajuan
         </Link>
@@ -60,7 +60,7 @@ export default function SubmissionList() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-4">
-          <div className="bg-blue-100 p-3 rounded-xl text-blue-600"><ClipboardList size={24} /></div>
+          <div className="bg-pink-100 p-3 rounded-xl text-pink-600"><ClipboardList size={24} /></div>
           <div>
             <p className="text-xs text-slate-500 font-medium">Total Pengajuan</p>
             <p className="text-xl font-bold text-slate-800">{loading ? "..." : submissions.length}</p>
@@ -102,7 +102,7 @@ export default function SubmissionList() {
               ) : filteredData.length > 0 ? (
                 filteredData.map((item) => (
                   <tr key={item.id} className="hover:bg-slate-50/50 transition-colors">
-                    <td className="p-4 text-sm font-bold text-blue-600">{item.reqNumber}</td>
+                    <td className="p-4 text-sm font-bold text-pink-600">{item.reqNumber}</td>
                     <td className="p-4">
                       <div className="flex items-center gap-3">
                         <div className="bg-slate-100 p-2 rounded-lg text-slate-600">
@@ -123,7 +123,7 @@ export default function SubmissionList() {
                           item.status === 'Ditolak' ? 'bg-red-100 text-red-600' : 
                           item.status === 'Revisi' ? 'bg-amber-100 text-amber-600' :
                           item.status === 'Dibatalkan' ? 'bg-slate-100 text-slate-500' :
-                          'bg-blue-100 text-blue-600'
+                          'bg-pink-100 text-pink-600'
                         }`}>
                           {item.status.toUpperCase()}
                         </span>
@@ -139,7 +139,7 @@ export default function SubmissionList() {
                       <div className="flex justify-center gap-1">
                         <Link 
                           href={`/dashboard/submissions/new?id=${item.id}`}
-                          className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                          className="p-2 text-slate-400 hover:text-pink-600 hover:bg-pink-50 rounded-lg transition-all"
                         >
                           <Edit size={16} />
                         </Link>

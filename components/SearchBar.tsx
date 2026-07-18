@@ -64,7 +64,7 @@ export default function SearchBar({
                 }
               }}
               placeholder="Cari keyword..."
-              className="w-full pl-9 pr-8 py-3 rounded-2xl border border-slate-200 bg-white/90 backdrop-blur-md text-sm text-slate-700 shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500/40 transition-all"
+              className="w-full pl-9 pr-8 py-3 rounded-2xl border border-slate-200 bg-white/90 backdrop-blur-md text-sm text-slate-700 shadow-xl focus:outline-none focus:ring-2 focus:ring-pink-500/40 transition-all"
             />
             {query && (
               <button
@@ -80,7 +80,7 @@ export default function SearchBar({
           </div>
           <button
             onClick={() => handleSearch()}
-            className="bg-blue-600 text-white p-3 rounded-2xl shadow-xl hover:bg-blue-700 transition-all"
+            className="bg-pink-600 text-white p-3 rounded-2xl shadow-xl hover:bg-pink-700 transition-all"
             disabled={searching}
           >
             {searching ? <div className="w-[18px] h-[18px] border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Search size={18} />}
@@ -96,7 +96,7 @@ export default function SearchBar({
                   setQuery(keyword)
                   setShowSuggestions(false)
                 }}
-                className="w-full text-left px-4 py-3 text-sm text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition-colors flex items-center gap-2"
+                className="w-full text-left px-4 py-3 text-sm text-slate-600 hover:bg-pink-50 hover:text-pink-600 transition-colors flex items-center gap-2"
               >
                 <Search size={13} className="text-slate-400" />
                 <span>{keyword}</span>
@@ -128,7 +128,7 @@ export default function SearchBar({
               }
             }}
             placeholder="Cari keyword (misal: estetik, murah...)"
-            className="w-full pl-9 pr-8 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-400 transition-all"
+            className="w-full pl-9 pr-8 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-pink-500/40 focus:border-pink-400 transition-all"
           />
           {query && (
             <button
@@ -146,7 +146,7 @@ export default function SearchBar({
         <button
           onClick={detectLocation}
           disabled={isDetectingLocation || searching}
-          className="bg-blue-500 hover:bg-blue-600 disabled:bg-blue-400 text-white p-3 rounded-xl shrink-0 transition-colors flex items-center justify-center"
+          className="bg-pink-500 hover:bg-pink-600 disabled:bg-pink-400 text-white p-3 rounded-xl shrink-0 transition-colors flex items-center justify-center"
           title="Deteksi Lokasi Saya"
         >
           {isDetectingLocation ? (
@@ -159,7 +159,7 @@ export default function SearchBar({
         <button
           onClick={() => handleSearch()}
           disabled={searching}
-          className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white px-4 rounded-xl flex items-center gap-2 shrink-0 transition-colors"
+          className="bg-pink-600 hover:bg-pink-700 disabled:bg-pink-300 text-white px-4 rounded-xl flex items-center gap-2 shrink-0 transition-colors"
         >
           {searching ? (
             <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -179,7 +179,7 @@ export default function SearchBar({
                 setQuery(keyword)
                 setShowSuggestions(false)
               }}
-              className="w-full text-left px-4 py-2.5 text-sm text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition-colors flex items-center gap-2 first:rounded-t-xl last:rounded-b-xl"
+              className="w-full text-left px-4 py-2.5 text-sm text-slate-600 hover:bg-pink-50 hover:text-pink-600 transition-colors flex items-center gap-2 first:rounded-t-xl last:rounded-b-xl"
             >
               <Search size={13} className="text-slate-400 shrink-0" />
               <span>{keyword}</span>

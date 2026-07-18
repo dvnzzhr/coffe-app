@@ -524,7 +524,7 @@ export default function MapComponent({ dbCafes, keywordMapping }: MapComponentPr
           {detailLoadingHref && (
             <div className="absolute inset-0 z-[1200] flex items-center justify-center bg-slate-900/20 backdrop-blur-[2px]">
               <div className="inline-flex items-center gap-3 rounded-2xl border border-white/40 bg-white/95 px-5 py-3 text-sm font-bold text-slate-700 shadow-2xl">
-                <Loader2 size={18} className="animate-spin text-blue-600" />
+                <Loader2 size={18} className="animate-spin text-pink-600" />
                 Membuka detail cafe...
               </div>
             </div>
@@ -545,7 +545,7 @@ export default function MapComponent({ dbCafes, keywordMapping }: MapComponentPr
             {!isDetailMapPage && (
               <Link
                 href="/map"
-                className="bg-blue-600/95 backdrop-blur-md border border-blue-500 px-4 py-3 rounded-2xl shadow-xl hover:bg-blue-700 transition-all text-white flex items-center justify-center gap-2 text-sm font-bold"
+                className="bg-pink-600/95 backdrop-blur-md border border-pink-500 px-4 py-3 rounded-2xl shadow-xl hover:bg-pink-700 transition-all text-white flex items-center justify-center gap-2 text-sm font-bold"
                 title="Buka Detail Map"
               >
                 <MapIcon size={18} />

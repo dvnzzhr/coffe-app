@@ -63,7 +63,7 @@ export default function CafeManagement() {
           </button>
           <Link 
             href="/dashboard/submissions/new"
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl shadow-lg shadow-blue-500/20 transition-all font-semibold"
+            className="flex items-center gap-2 bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-xl shadow-lg shadow-pink-500/20 transition-all font-semibold"
           >
             <Plus size={18} /> Tambah Cabang Baru
           </Link>
@@ -72,7 +72,7 @@ export default function CafeManagement() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-4">
-          <div className="bg-blue-100 p-3 rounded-xl text-blue-600"><Store size={24} /></div>
+          <div className="bg-pink-100 p-3 rounded-xl text-pink-600"><Store size={24} /></div>
           <div>
             <p className="text-xs text-slate-500 font-medium">Cabang Aktif</p>
             <p className="text-xl font-bold text-slate-800">{loading ? "..." : cafes.length}</p>
@@ -114,7 +114,7 @@ export default function CafeManagement() {
               ) : filteredCafes.length > 0 ? (
                 filteredCafes.map((cafe) => (
                   <tr key={cafe.id} className="hover:bg-slate-50/50 transition-colors">
-                    <td className="p-4 text-sm font-bold text-blue-600">{cafe.reqNumber}</td>
+                    <td className="p-4 text-sm font-bold text-pink-600">{cafe.reqNumber}</td>
                     <td className="p-4">
                       <div className="flex items-center gap-3">
                         <div className="bg-slate-100 p-2 rounded-lg text-slate-600"><Coffee size={16} /></div>
@@ -131,7 +131,7 @@ export default function CafeManagement() {
                       <div className="flex justify-center gap-1">
                         <Link 
                           href={`/dashboard/submissions/new?id=${cafe.id}&from=cafes`}
-                          className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                          className="p-2 text-slate-400 hover:text-pink-600 hover:bg-pink-50 rounded-lg transition-all"
                         >
                           <Edit size={16} />
                         </Link>

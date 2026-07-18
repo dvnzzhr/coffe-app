@@ -109,7 +109,7 @@ export default function KeywordManagement() {
         </div>
         <button
           onClick={() => handleOpenModal()}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl shadow-lg shadow-blue-500/20 transition-all font-semibold"
+          className="flex items-center gap-2 bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-xl shadow-lg shadow-pink-500/20 transition-all font-semibold"
         >
           <Plus size={18} /> Tambah Keyword
         </button>
@@ -167,7 +167,7 @@ export default function KeywordManagement() {
                     <ArrowRight size={16} className="mx-auto text-slate-300" />
                   </td>
                   <td className="p-4">
-                    <span className="font-medium text-blue-600 italic">
+                    <span className="font-medium text-pink-600 italic">
                       "{kw.value}"
                     </span>
                   </td>
@@ -175,7 +175,7 @@ export default function KeywordManagement() {
                     <div className="flex justify-center gap-2">
                       <button
                         onClick={() => handleOpenModal(kw)}
-                        className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                        className="p-2 text-slate-400 hover:text-pink-600 hover:bg-pink-50 rounded-lg transition-all"
                       >
                         <Edit size={18} />
                       </button>
@@ -220,7 +220,7 @@ export default function KeywordManagement() {
                   type="text"
                   required
                   placeholder="Contoh: cozy"
-                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all text-sm text-gray-700 font-bold"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none transition-all text-sm text-gray-700 font-bold"
                   value={formData.key}
                   onChange={(e) => setFormData({ ...formData, key: e.target.value })}
                 />
@@ -233,7 +233,7 @@ export default function KeywordManagement() {
                   type="text"
                   required
                   placeholder="Contoh: coffee lounge"
-                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all text-sm text-blue-600 font-medium italic"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none transition-all text-sm text-pink-600 font-medium italic"
                   value={formData.value}
                   onChange={(e) => setFormData({ ...formData, value: e.target.value })}
                 />
@@ -252,7 +252,7 @@ export default function KeywordManagement() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="flex-1 px-4 py-2.5 bg-blue-600 text-white font-bold rounded-xl shadow-lg shadow-blue-500/20 hover:bg-blue-700 transition-all text-sm flex items-center justify-center gap-2 disabled:opacity-70"
+                  className="flex-1 px-4 py-2.5 bg-pink-600 text-white font-bold rounded-xl shadow-lg shadow-pink-500/20 hover:bg-pink-700 transition-all text-sm flex items-center justify-center gap-2 disabled:opacity-70"
                 >
                   {submitting && <Loader2 className="animate-spin" size={16} />}
                   {editingKeyword ? "Simpan Perubahan" : "Simpan Pemetaan"}

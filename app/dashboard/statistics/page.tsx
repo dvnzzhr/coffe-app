@@ -5,7 +5,7 @@ import { BarChart3, TrendingUp, AlertCircle, Coffee, Users, ClipboardCheck, Arro
 export default function StatisticsPage() {
   // Data dummy untuk statistik
   const stats = [
-    { label: "Total Pengajuan", value: "128", trend: "+12%", up: true, icon: <ClipboardCheck className="text-blue-600" /> },
+    { label: "Total Pengajuan", value: "128", trend: "+12%", up: true, icon: <ClipboardCheck className="text-pink-600" /> },
     { label: "Cabang Aktif", value: "12", trend: "0%", up: true, icon: <Coffee className="text-orange-600" /> },
     { label: "Total Owner", value: "8", trend: "+2", up: true, icon: <Users className="text-indigo-600" /> },
     { label: "Pengajuan Ditolak", value: "3", trend: "-5%", up: false, icon: <AlertCircle className="text-red-600" /> },
@@ -48,7 +48,7 @@ export default function StatisticsPage() {
         <div className="lg:col-span-2 bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
           <div className="flex items-center justify-between mb-6">
             <h2 className="font-bold text-slate-800 flex items-center gap-2">
-              <BarChart3 size={20} className="text-blue-600" /> Tren Pengajuan Bulanan
+              <BarChart3 size={20} className="text-pink-600" /> Tren Pengajuan Bulanan
             </h2>
             <select className="text-xs bg-slate-50 border-none rounded-lg p-2 outline-none font-medium text-slate-600">
               <option>6 Bulan Terakhir</option>
@@ -59,7 +59,7 @@ export default function StatisticsPage() {
             {data.map((h, i) => (
               <div
                 key={i}
-                className="w-full bg-blue-500 rounded-t-lg transition-all hover:bg-blue-600 cursor-pointer"
+                className="w-full bg-pink-500 rounded-t-lg transition-all hover:bg-pink-600 cursor-pointer"
                 style={{ height: `${h}%` }}
               ></div>
             ))}

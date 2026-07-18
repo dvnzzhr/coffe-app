@@ -165,7 +165,7 @@ export default function FacilityManagement() {
                     <div className="flex justify-center gap-2">
                       <button
                         onClick={() => handleOpenModal(f)}
-                        className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                        className="p-2 text-slate-400 hover:text-pink-600 hover:bg-pink-50 rounded-lg transition-all"
                       >
                         <Edit size={18} />
                       </button>

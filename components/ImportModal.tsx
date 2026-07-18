@@ -235,7 +235,7 @@ export default function ImportModal({ isOpen, onClose, onSuccess }: ImportModalP
           {/* Load Library Status */}
           {!xlsxLoaded && !errorMsg && (
             <div className="flex flex-col items-center justify-center py-12 text-slate-500">
-              <Loader2 className="animate-spin text-blue-600 mb-3" size={32} />
+              <Loader2 className="animate-spin text-pink-600 mb-3" size={32} />
               <p className="text-sm font-medium">Memuat pustaka parsing Excel...</p>
             </div>
           )}
@@ -264,8 +264,8 @@ export default function ImportModal({ isOpen, onClose, onSuccess }: ImportModalP
               onClick={triggerFileSelect}
               className={`border-2 border-dashed rounded-[2rem] p-12 text-center cursor-pointer transition-all duration-300 flex flex-col items-center justify-center ${
                 isDragOver 
-                  ? "border-blue-500 bg-blue-50/50 scale-[0.98]" 
-                  : "border-slate-200 hover:border-blue-400 hover:bg-slate-50/50"
+                  ? "border-pink-500 bg-pink-50/50 scale-[0.98]" 
+                  : "border-slate-200 hover:border-pink-400 hover:bg-slate-50/50"
               }`}
             >
               <input 
@@ -299,9 +299,9 @@ export default function ImportModal({ isOpen, onClose, onSuccess }: ImportModalP
           {importStatus.state === "importing" && (
             <div className="flex flex-col items-center justify-center py-16 text-slate-600">
               <div className="relative mb-6">
-                <Loader2 className="animate-spin text-blue-600" size={56} />
+                <Loader2 className="animate-spin text-pink-600" size={56} />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <RefreshCw className="text-blue-500 animate-pulse" size={20} />
+                  <RefreshCw className="text-pink-500 animate-pulse" size={20} />
                 </div>
               </div>
               <h4 className="text-lg font-bold text-slate-800">Sedang Mengimpor Data...</h4>
@@ -400,7 +400,7 @@ export default function ImportModal({ isOpen, onClose, onSuccess }: ImportModalP
                           <td className="p-3 text-slate-500">{cafe.kecamatan || "-"}</td>
                           <td className="p-3 text-center">
                             {hasCoords ? (
-                              <span className="bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded font-mono text-[10px]">
+                              <span className="bg-pink-50 text-pink-600 px-1.5 py-0.5 rounded font-mono text-[10px]">
                                 {parseFloat(cafe.latitude || "0").toFixed(4)}, {parseFloat(cafe.longitude || "0").toFixed(4)}
                               </span>
                             ) : (

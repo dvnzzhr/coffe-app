@@ -22,7 +22,7 @@ export default function DashboardPage() {
   }, [])
 
   const statCards = [
-    { label: "Total Pengajuan", value: stats?.totalSubmissions || 0, icon: <ClipboardCheck className="text-blue-600" />, color: "bg-blue-50" },
+    { label: "Total Pengajuan", value: stats?.totalSubmissions || 0, icon: <ClipboardCheck className="text-pink-600" />, color: "bg-pink-50" },
     { label: "Cabang Aktif", value: stats?.activeCafes || 0, icon: <Coffee className="text-orange-600" />, color: "bg-orange-50" },
     { label: "Total Owner", value: stats?.totalOwners || 0, icon: <Users className="text-indigo-600" />, color: "bg-indigo-50" },
     { label: "Pengajuan Ditolak", value: stats?.rejectedSubmissions || 0, icon: <AlertCircle className="text-red-600" />, color: "bg-red-50" },
@@ -37,7 +37,7 @@ export default function DashboardPage() {
 
       {loading ? (
         <div className="flex flex-col items-center justify-center p-20 bg-white rounded-3xl border border-slate-100 shadow-sm">
-          <Loader2 className="animate-spin text-blue-600 mb-4" size={40} />
+          <Loader2 className="animate-spin text-pink-600 mb-4" size={40} />
           <p className="text-slate-400 font-medium">Menyiapkan dashboard Anda...</p>
         </div>
       ) : (
@@ -45,7 +45,7 @@ export default function DashboardPage() {
           {/* Grid Stat Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {statCards.map((stat, i) => (
-              <div key={i} className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:border-blue-200 transition-all group">
+              <div key={i} className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:border-pink-200 transition-all group">
                 <div className="flex justify-between items-start mb-4">
                   <div className={`p-3 ${stat.color} rounded-xl group-hover:scale-110 transition-transform`}>{stat.icon}</div>
                   <div className="bg-slate-50 text-[10px] font-bold px-2 py-1 rounded-lg text-slate-400 uppercase tracking-wider">Real-time</div>
@@ -61,7 +61,7 @@ export default function DashboardPage() {
             <div className="lg:col-span-2 bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="font-bold text-slate-800 flex items-center gap-2">
-                  <BarChart3 size={20} className="text-blue-600" /> Pengajuan Terbaru
+                  <BarChart3 size={20} className="text-pink-600" /> Pengajuan Terbaru
                 </h2>
               </div>
               <div className="space-y-4">
@@ -69,7 +69,7 @@ export default function DashboardPage() {
                   stats.latestSubmissions.map((sub: any) => (
                     <div key={sub.id} className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-100">
                       <div className="flex items-center gap-4">
-                        <div className="bg-white p-2 rounded-xl shadow-sm text-blue-600 font-bold text-xs">{sub.reqNumber}</div>
+                        <div className="bg-white p-2 rounded-xl shadow-sm text-pink-600 font-bold text-xs">{sub.reqNumber}</div>
                         <div>
                           <p className="text-sm font-bold text-slate-800">{sub.cafeName}</p>
                           <p className="text-[10px] text-slate-400 flex items-center gap-1"><MapPin size={10} /> {sub.address}</p>
@@ -112,7 +112,7 @@ export default function DashboardPage() {
                   </div>
                   <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
                     <div 
-                      className="h-full bg-blue-500 rounded-full" 
+                      className="h-full bg-pink-500 rounded-full" 
                       style={{ width: `${stats?.totalSubmissions > 0 ? (stats.activeCafes / stats.totalSubmissions) * 100 : 0}%` }}
                     ></div>
                   </div>

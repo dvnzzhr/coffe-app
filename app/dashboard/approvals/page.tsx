@@ -52,7 +52,7 @@ export default function ApprovalPage() {
     <DashboardLayout>
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
-          <CheckCircle className="text-blue-600" />
+          <CheckCircle className="text-pink-600" />
           Persetujuan Pengajuan Lokasi
         </h1>
         <p className="text-slate-500 text-sm mt-1">Evaluasi dan berikan keputusan pada pengajuan café baru dari owner.</p>
@@ -60,18 +60,18 @@ export default function ApprovalPage() {
 
       {loading ? (
         <div className="flex flex-col items-center justify-center p-20 bg-white rounded-3xl border border-slate-100 shadow-sm">
-          <Loader2 className="animate-spin text-blue-600 mb-4" size={40} />
+          <Loader2 className="animate-spin text-pink-600 mb-4" size={40} />
           <p className="text-slate-400 font-medium">Memuat pengajuan pending...</p>
         </div>
       ) : submissions.length > 0 ? (
         <div className="grid grid-cols-1 gap-6">
           {submissions.map((item) => (
-            <div key={item.id} className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden hover:border-blue-200 transition-all">
+            <div key={item.id} className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden hover:border-pink-200 transition-all">
               <div className="p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
                 {/* Info Utama */}
                 <div className="flex-1 space-y-4">
                   <div className="flex items-center gap-3">
-                    <span className="px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold rounded-full border border-blue-100">
+                    <span className="px-3 py-1 bg-pink-50 text-pink-600 text-[10px] font-bold rounded-full border border-pink-100">
                       {item.reqNumber}
                     </span>
                     <span className="text-xs text-slate-400">

@@ -251,7 +251,7 @@ function NewSubmissionFormContent() {
               Kembali ke Daftar
             </Link>
             {successState !== 'cancelled' && (
-              <button onClick={() => setSuccessState(null)} className="px-6 py-3 bg-blue-600 text-white font-bold rounded-xl shadow-lg shadow-blue-500/20 hover:bg-blue-700 transition-all">
+              <button onClick={() => setSuccessState(null)} className="px-6 py-3 bg-pink-600 text-white font-bold rounded-xl shadow-lg shadow-pink-500/20 hover:bg-pink-700 transition-all">
                 Buat Pengajuan Lagi
               </button>
             )}
@@ -267,7 +267,7 @@ function NewSubmissionFormContent() {
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4">
-            <Link href={backUrl} className="p-2 bg-white rounded-xl border border-slate-200 text-slate-400 hover:text-blue-600 transition-colors">
+            <Link href={backUrl} className="p-2 bg-white rounded-xl border border-slate-200 text-slate-400 hover:text-pink-600 transition-colors">
               <ArrowLeft size={20} />
             </Link>
             <div>
@@ -293,7 +293,7 @@ function NewSubmissionFormContent() {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Informasi Umum */}
           <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
-            <div className="flex items-center gap-2 mb-6 text-blue-600">
+            <div className="flex items-center gap-2 mb-6 text-pink-600">
               <Store size={20} />
               <h2 className="font-bold text-slate-800">Informasi Café</h2>
             </div>
@@ -305,7 +305,7 @@ function NewSubmissionFormContent() {
                   required
                   type="text"
                   placeholder="Contoh: SIG Cafe Merr"
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all text-gray-700"
+                  className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-pink-500 focus:ring-4 focus:ring-pink-500/10 outline-none transition-all text-gray-700"
                   value={formData.cafeName}
                   onChange={(e) => setFormData({ ...formData, cafeName: e.target.value })}
                 />
@@ -316,7 +316,7 @@ function NewSubmissionFormContent() {
                   required
                   type="number"
                   placeholder="Jumlah kursi"
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all text-gray-700"
+                  className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-pink-500 focus:ring-4 focus:ring-pink-500/10 outline-none transition-all text-gray-700"
                   value={formData.capacity}
                   onChange={(e) => setFormData({ ...formData, capacity: e.target.value })}
                 />
@@ -327,7 +327,7 @@ function NewSubmissionFormContent() {
                   required
                   rows={3}
                   placeholder="Jl. Ahmad Yani No. 10, Surabaya..."
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all text-gray-700"
+                  className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-pink-500 focus:ring-4 focus:ring-pink-500/10 outline-none transition-all text-gray-700"
                   value={formData.address}
                   onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                 ></textarea>
@@ -601,7 +601,7 @@ function NewSubmissionFormContent() {
             <button
               type="submit"
               disabled={loading}
-              className={`px-8 py-3 rounded-xl font-bold text-white flex items-center gap-2 shadow-lg transition-all ${loading ? 'bg-slate-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 shadow-blue-500/20'
+              className={`px-8 py-3 rounded-xl font-bold text-white flex items-center gap-2 shadow-lg transition-all ${loading ? 'bg-slate-400 cursor-not-allowed' : 'bg-pink-600 hover:bg-pink-700 shadow-pink-500/20'
                 }`}
             >
               {loading ? <Loader2 className="animate-spin" size={20} /> : (
@@ -632,7 +632,7 @@ export default function NewSubmissionPage() {
     <Suspense fallback={
       <DashboardLayout>
         <div className="flex flex-col items-center justify-center min-h-[60vh]">
-          <Loader2 className="animate-spin text-blue-600 mb-4" size={40} />
+          <Loader2 className="animate-spin text-pink-600 mb-4" size={40} />
           <p className="text-slate-400 font-medium">Memuat halaman...</p>
         </div>
       </DashboardLayout>

@@ -30,13 +30,13 @@ export default function ConfirmModal({
   const typeColors = {
     danger: 'bg-red-500 hover:bg-red-600 shadow-red-500/20 text-white',
     warning: 'bg-amber-500 hover:bg-amber-600 shadow-amber-500/20 text-white',
-    info: 'bg-blue-600 hover:bg-blue-700 shadow-blue-500/20 text-white'
+    info: 'bg-pink-600 hover:bg-pink-700 shadow-pink-500/20 text-white'
   }
 
   const iconColors = {
     danger: 'bg-red-100 text-red-600',
     warning: 'bg-amber-100 text-amber-600',
-    info: 'bg-blue-100 text-blue-600'
+    info: 'bg-pink-100 text-pink-600'
   }
 
   return (

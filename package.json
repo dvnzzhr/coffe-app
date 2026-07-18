@@ -12,6 +12,7 @@
   "dependencies": {
     "@prisma/client": "^6.19.3",
     "bcryptjs": "^3.0.3",
+    "jimp": "^1.6.1",
     "leaflet": "^1.9.4",
     "lucide-react": "^1.8.0",
     "next": "16.2.3",

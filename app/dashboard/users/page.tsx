@@ -113,7 +113,7 @@ export default function UserManagement() {
         </div>
         <button
           onClick={() => handleOpenModal()}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl shadow-lg shadow-blue-500/20 transition-all font-semibold"
+          className="flex items-center gap-2 bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-xl shadow-lg shadow-pink-500/20 transition-all font-semibold"
         >
           <Plus size={18} /> Tambah Akun
         </button>
@@ -121,7 +121,7 @@ export default function UserManagement() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-4">
-          <div className="bg-blue-100 p-3 rounded-xl text-blue-600"><User size={24} /></div>
+          <div className="bg-pink-100 p-3 rounded-xl text-pink-600"><User size={24} /></div>
           <div>
             <p className="text-xs text-slate-500 font-medium">Total Akun</p>
             <p className="text-xl font-bold text-slate-800">{loading ? "..." : users.length}</p>
@@ -189,7 +189,7 @@ export default function UserManagement() {
                     <div className="flex justify-center gap-2">
                       <button
                         onClick={() => handleOpenModal(user)}
-                        className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                        className="p-2 text-slate-400 hover:text-pink-600 hover:bg-pink-50 rounded-lg transition-all"
                       >
                         <Edit size={18} />
                       </button>
@@ -234,7 +234,7 @@ export default function UserManagement() {
                   type="text"
                   required
                   placeholder="Contoh: Budi Santoso"
-                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all text-sm text-gray-600"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none transition-all text-sm text-gray-600"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 />
@@ -247,7 +247,7 @@ export default function UserManagement() {
                     type="text"
                     required
                     placeholder="username"
-                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all text-sm text-gray-600"
+                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none transition-all text-sm text-gray-600"
                     value={formData.username}
                     onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                   />
@@ -255,7 +255,7 @@ export default function UserManagement() {
                 <div>
                   <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Role</label>
                   <select
-                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all text-sm appearance-none text-gray-600"
+                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none transition-all text-sm appearance-none text-gray-600"
                     value={formData.role}
                     onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                   >
@@ -274,7 +274,7 @@ export default function UserManagement() {
                   type="password"
                   required={!editingUser}
                   placeholder="••••••••"
-                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all text-sm text-gray-600"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none transition-all text-sm text-gray-600"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 />
@@ -292,7 +292,7 @@ export default function UserManagement() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="flex-1 px-4 py-2.5 bg-blue-600 text-white font-bold rounded-xl shadow-lg shadow-blue-500/20 hover:bg-blue-700 transition-all text-sm flex items-center justify-center gap-2 disabled:opacity-70"
+                  className="flex-1 px-4 py-2.5 bg-pink-600 text-white font-bold rounded-xl shadow-lg shadow-pink-500/20 hover:bg-pink-700 transition-all text-sm flex items-center justify-center gap-2 disabled:opacity-70"
                 >
                   {submitting && <Loader2 className="animate-spin" size={16} />}
                   {editingUser ? "Simpan Perubahan" : "Simpan Akun"}

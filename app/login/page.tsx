@@ -47,7 +47,7 @@ export default function LoginPage() {
       <div className="absolute top-6 left-6 hidden sm:block">
         <Link 
           href="/" 
-          className="flex items-center gap-2 text-slate-500 hover:text-blue-600 bg-white px-4 py-2 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-all font-bold text-sm"
+          className="flex items-center gap-2 text-slate-500 hover:text-pink-600 bg-white px-4 py-2 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-all font-bold text-sm"
         >
           <ChevronLeft size={18} /> Kembali ke Beranda
         </Link>
@@ -89,7 +89,7 @@ export default function LoginPage() {
                 <input
                   type="text"
                   placeholder="Masukkan username"
-                  className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-slate-900"
+                  className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none transition-all text-slate-900"
                   onChange={(e) => setUsername(e.target.value)}
                   required
                 />
@@ -105,7 +105,7 @@ export default function LoginPage() {
                 <input
                   type="password"
                   placeholder="••••••••"
-                  className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-slate-900"
+                  className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none transition-all text-slate-900"
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
@@ -115,7 +115,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-blue-500/30 transition-all flex items-center justify-center gap-2 disabled:opacity-70"
+              className="w-full bg-pink-600 hover:bg-pink-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-pink-500/30 transition-all flex items-center justify-center gap-2 disabled:opacity-70"
             >
               {loading ? <Loader2 className="animate-spin" size={20} /> : "Masuk Sekarang"}
             </button>
@@ -124,7 +124,7 @@ export default function LoginPage() {
           <div className="mt-6 text-center">
             <p className="text-slate-500 text-sm">
               Belum punya akun?{" "}
-              <Link href="/register" className="text-blue-600 font-bold hover:underline">
+              <Link href="/register" className="text-pink-600 font-bold hover:underline">
                 Daftar Sebagai Owner
               </Link>
             </p>

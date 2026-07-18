@@ -110,9 +110,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <div className="flex items-center gap-3 sm:gap-4">
             <div className="text-right hidden sm:block">
               <p className="text-sm font-bold text-slate-800">{userName}</p>
-              <p className="text-[10px] font-bold text-blue-600 uppercase tracking-wider">{role.replace('_', ' ')}</p>
+              <p className="text-[10px] font-bold text-pink-600 uppercase tracking-wider">{role.replace('_', ' ')}</p>
             </div>
-            <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 font-bold shadow-sm border border-blue-200">
+            <div className="w-10 h-10 bg-pink-100 rounded-xl flex items-center justify-center text-pink-600 font-bold shadow-sm border border-pink-200">
               {userName.charAt(0)}
             </div>
           </div>

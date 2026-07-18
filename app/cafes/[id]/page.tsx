@@ -65,7 +65,7 @@ export default async function CafeDetailPage({ params }: CafeDetailPageProps) {
         <div className="mb-6 flex items-center justify-between gap-4">
           <BackButton />
 
-          <span className={`rounded-full px-3 py-1 text-xs font-bold ${cafe.source === 'foursquare' ? 'bg-blue-100 text-blue-700' : 'bg-orange-100 text-orange-700'}`}>
+          <span className={`rounded-full px-3 py-1 text-xs font-bold ${cafe.source === 'foursquare' ? 'bg-pink-100 text-pink-700' : 'bg-orange-100 text-orange-700'}`}>
             {cafe.source === 'foursquare' ? 'Foursquare' : 'SIG Terverifikasi'}
           </span>
         </div>
@@ -76,7 +76,7 @@ export default async function CafeDetailPage({ params }: CafeDetailPageProps) {
           </div>
 
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="mb-3 flex items-center gap-2 text-xs font-black uppercase tracking-widest text-blue-600">
+            <div className="mb-3 flex items-center gap-2 text-xs font-black uppercase tracking-widest text-pink-600">
               <ShieldCheck size={14} />
               Detail Cafe
             </div>
@@ -107,15 +107,15 @@ export default async function CafeDetailPage({ params }: CafeDetailPageProps) {
 
             <div className="mt-6 space-y-4 text-sm text-slate-600">
               <p className="flex gap-3">
-                <MapPin size={18} className="mt-0.5 shrink-0 text-blue-500" />
+                <MapPin size={18} className="mt-0.5 shrink-0 text-pink-500" />
                 <span>{cafe.address}</span>
               </p>
               <p className="flex gap-3">
-                <Phone size={18} className="mt-0.5 shrink-0 text-blue-500" />
+                <Phone size={18} className="mt-0.5 shrink-0 text-pink-500" />
                 <span>{cafe.phone || 'Belum ada informasi kontak'}</span>
               </p>
               <p className="flex gap-3">
-                <Clock size={18} className="mt-0.5 shrink-0 text-blue-500" />
+                <Clock size={18} className="mt-0.5 shrink-0 text-pink-500" />
                 <span>{cafe.openingHours || 'Belum ada informasi jam operasional'}</span>
               </p>
             </div>
@@ -124,7 +124,7 @@ export default async function CafeDetailPage({ params }: CafeDetailPageProps) {
               href={mapsUrl}
               target="_blank"
               rel="noreferrer"
-              className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-blue-200 transition-colors hover:bg-blue-700"
+              className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-pink-600 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-pink-200 transition-colors hover:bg-pink-700"
             >
               <ExternalLink size={16} />
               Navigasi ke Lokasi
@@ -135,14 +135,14 @@ export default async function CafeDetailPage({ params }: CafeDetailPageProps) {
         <section className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
           <div className="grid gap-0 lg:grid-cols-[0.85fr_1.15fr]">
             <div className="p-6">
-              <div className="mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-widest text-blue-600">
+              <div className="mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-widest text-pink-600">
                 <MapPin size={14} />
                 Lokasi Cafe
               </div>
               <h2 className="text-xl font-black text-slate-900">{cafe.cafeName}</h2>
               <div className="mt-4 space-y-3 text-sm text-slate-600">
                 <p className="flex gap-3">
-                  <MapPin size={18} className="mt-0.5 shrink-0 text-blue-500" />
+                  <MapPin size={18} className="mt-0.5 shrink-0 text-pink-500" />
                   <span>{cafe.address}</span>
                 </p>
                 {(cafe.kelurahan || cafe.kecamatan) && (
@@ -161,7 +161,7 @@ export default async function CafeDetailPage({ params }: CafeDetailPageProps) {
                 href={mapsUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-blue-200 transition-colors hover:bg-blue-700"
+                className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-pink-600 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-pink-200 transition-colors hover:bg-pink-700"
               >
                 <ExternalLink size={16} />
                 Buka di Google Maps
@@ -189,7 +189,7 @@ export default async function CafeDetailPage({ params }: CafeDetailPageProps) {
             {facilities.length > 0 ? (
               <div className="flex flex-wrap gap-2">
                 {facilities.map((facility) => (
-                  <span key={facility} className="rounded-lg border border-blue-100 bg-blue-50 px-3 py-2 text-xs font-bold text-blue-700">
+                  <span key={facility} className="rounded-lg border border-pink-100 bg-pink-50 px-3 py-2 text-xs font-bold text-pink-700">
                     {facility}
                   </span>
                 ))}

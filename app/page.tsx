@@ -43,9 +43,9 @@ export default function LandingPage() {
           </div>
 
           <div className="hidden md:flex items-center gap-8 text-sm font-bold text-slate-500">
-            <a href="#map" className="hover:text-blue-600 transition-colors">Eksplorasi Peta</a>
-            <a href="#" className="hover:text-blue-600 transition-colors">Tentang SIG</a>
-            <a href="#" className="hover:text-blue-600 transition-colors">Bantuan</a>
+            <a href="#map" className="hover:text-pink-600 transition-colors">Eksplorasi Peta</a>
+            <a href="#" className="hover:text-pink-600 transition-colors">Tentang SIG</a>
+            <a href="#" className="hover:text-pink-600 transition-colors">Bantuan</a>
           </div>
 
           <div className="flex items-center gap-3">
@@ -59,7 +59,7 @@ export default function LandingPage() {
             ) : (
               <Link 
                 href="/login"
-                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-2xl font-bold transition-all shadow-xl shadow-blue-500/20"
+                className="flex items-center gap-2 bg-pink-600 hover:bg-pink-700 text-white px-8 py-3 rounded-2xl font-bold transition-all shadow-xl shadow-pink-500/20"
               >
                 <LogIn size={18} /> Masuk Akun
               </Link>
@@ -72,11 +72,11 @@ export default function LandingPage() {
       <main className="flex-1 pt-20 flex flex-col">
         {/* Hero Section */}
         <section className="px-6 py-16 md:py-24 text-center max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-600 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest mb-8 border border-blue-100">
+          <div className="inline-flex items-center gap-2 bg-pink-50 text-pink-600 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest mb-8 border border-pink-100">
             <ShieldCheck size={14} /> Sistem Informasi Geografis Terverifikasi
           </div>
           <h1 className="text-5xl md:text-7xl font-black text-slate-900 leading-[1.1] tracking-tight mb-8">
-            Temukan Titik <span className="text-blue-600">Café Terbaik</span> di Sekitar Anda.
+            Temukan Titik <span className="text-pink-600">Café Terbaik</span> di Sekitar Anda.
           </h1>
           <p className="text-lg md:text-xl text-slate-500 leading-relaxed mb-10 max-w-2xl mx-auto">
             SIG Cafe memudahkan Anda mencari lokasi nongkrong yang strategis dengan data geografis yang akurat dan terverifikasi oleh tim kami.
@@ -86,7 +86,7 @@ export default function LandingPage() {
               Mulai Eksplorasi <Navigation2 size={18} className="rotate-45" />
             </a>
             {!session && (
-              <Link href="/register" className="bg-white text-blue-600 border-2 border-blue-600 px-10 py-4 rounded-2xl font-bold hover:bg-blue-50 transition-all flex items-center gap-2">
+              <Link href="/register" className="bg-white text-pink-600 border-2 border-pink-600 px-10 py-4 rounded-2xl font-bold hover:bg-pink-50 transition-all flex items-center gap-2">
                 <Store size={18} /> Daftar Sebagai Owner
               </Link>
             )}
@@ -101,7 +101,7 @@ export default function LandingPage() {
           <div className="w-full h-full max-w-7xl mx-auto">
             {loading ? (
               <div className="w-full h-[600px] bg-slate-50 rounded-[3rem] flex flex-col items-center justify-center border-2 border-dashed border-slate-200">
-                <div className="animate-spin text-blue-600 mb-4">
+                <div className="animate-spin text-pink-600 mb-4">
                   <Coffee size={40} />
                 </div>
                 <p className="text-slate-400 font-bold uppercase tracking-widest text-sm">Menyiapkan Peta SIG...</p>
@@ -134,9 +134,9 @@ export default function LandingPage() {
             © 2026 SIG Cafe. Developed with Leaflet, OSM, and Foursquare.
           </p>
           <div className="flex gap-6 text-slate-400 text-sm font-bold">
-            <a href="#" className="hover:text-blue-600">Privacy</a>
-            <a href="#" className="hover:text-blue-600">Terms</a>
-            <a href="#" className="hover:text-blue-600">Contact</a>
+            <a href="#" className="hover:text-pink-600">Privacy</a>
+            <a href="#" className="hover:text-pink-600">Terms</a>
+            <a href="#" className="hover:text-pink-600">Contact</a>
           </div>
         </div>
       </footer>
