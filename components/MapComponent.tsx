@@ -46,6 +46,7 @@ export default function MapComponent({ dbCafes, keywordMapping }: MapComponentPr
   const [dbIcon, setDbIcon] = useState<any>(null)
   const [bestMatchIcon, setBestMatchIcon] = useState<any>(null)
   const [searching, setSearching] = useState(false)
+  const [isDetectingLocation, setIsDetectingLocation] = useState(false)
   const [searchMode, setSearchMode] = useState<'current' | 'surabaya'>('surabaya')
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
@@ -147,6 +148,32 @@ export default function MapComponent({ dbCafes, keywordMapping }: MapComponentPr
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const initialQ = params.get('q')
+    const initialMode = params.get('mode') as 'current' | 'surabaya'
+
+    if (initialMode) {
+      setSearchMode(initialMode)
+      if (initialMode === 'current' && !userLocation) detectLocation()
+    } else {
+      const cachedMode = localStorage.getItem('lastSearchMode') as 'current' | 'surabaya'
+      if (cachedMode) {
+        setSearchMode(cachedMode)
+        if (cachedMode === 'current' && !userLocation) detectLocation()
+      }
+    }
+
+    // Helper to load dbCafes as default
+    const loadDefaultCafes = () => {
+      const defaultCafes = dbCafes.map((c: any) => ({
+        ...c,
+        isDb: true,
+        isFoursquare: false,
+        latitude: parseFloat(c.latitude),
+        longitude: parseFloat(c.longitude),
+        distance: 0,
+        relevance: 100, // Make default cafes high relevance
+      }))
+      setCafes(defaultCafes)
+    }
 
     try {
       // Guard: clear oversized cache that could crash the page (>500KB)
@@ -164,44 +191,99 @@ export default function MapComponent({ dbCafes, keywordMapping }: MapComponentPr
         if (cachedQuery === initialQ && freshCafes) {
           setCafes(JSON.parse(freshCafes))
           return
+        } else {
+          handleSearch(initialQ)
+          return
         }
-      } else if (cachedQuery && freshCafes) {
+      } else if (cachedQuery !== null && freshCafes) {
         setQuery(cachedQuery)
         setCafes(JSON.parse(freshCafes))
-        params.set('q', cachedQuery)
+        
+        if (cachedQuery) {
+          params.set('q', cachedQuery)
+        } else {
+          params.delete('q')
+        }
+        
+        const mode = initialMode || localStorage.getItem('lastSearchMode') || 'surabaya'
+        params.set('mode', mode)
         router.replace(`${pathname}?${params.toString()}`, { scroll: false })
         return
+      } else {
+        const mode = initialMode || localStorage.getItem('lastSearchMode') || 'surabaya'
+        const isDefaultLoaded = localStorage.getItem('isDefaultSurabayaLoaded') === 'true'
+        if (mode === 'surabaya' && isDefaultLoaded) {
+          loadDefaultCafes()
+          return
+        }
       }
 
-      if (initialQ && cafes.length === 0) {
-        handleSearch(initialQ)
-      }
+      // Belum ada pencarian
+      setCafes([])
+
     } catch (e) {
       // If localStorage is corrupt or inaccessible, clear it and move on
       try {
         localStorage.removeItem('lastSearchCafes')
         localStorage.removeItem('lastSearchQuery')
-      } catch { /* ignore */ }
-      if (initialQ && cafes.length === 0) {
+      } 
+      catch { /* ignore */ }
+      
+      if (initialQ) {
         handleSearch(initialQ)
+      } else {
+        const isDefaultLoaded = localStorage.getItem('isDefaultSurabayaLoaded') === 'true'
+        if (isDefaultLoaded) loadDefaultCafes()
+        else setCafes([])
       }
     }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [dbCafes]) // include dbCafes in deps so it updates when page fetches data
 
-  const detectLocation = () => {
-    navigator.geolocation.getCurrentPosition((pos) => {
-      const lat = pos.coords.latitude
-      const lng = pos.coords.longitude
-
-      setUserLocation([lat, lng])
-      setMapCenter([lat, lng])
+  const getCurrentLocationPromise = (): Promise<[number, number]> => {
+    return new Promise((resolve) => {
+      // Selalu ambil posisi terbaru, dan wajib pusatkan peta (setMapCenter)
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const lat = pos.coords.latitude
+          const lng = pos.coords.longitude
+          setUserLocation([lat, lng])
+          setMapCenter([lat, lng])
+          resolve([lat, lng])
+        },
+        () => {
+          // fallback to Wonokromo if permission denied
+          const fallback: [number, number] = [-7.2915, 112.7348]
+          if (!userLocation) setUserLocation(fallback)
+          setMapCenter(userLocation || fallback)
+          resolve(userLocation || fallback)
+        },
+        { enableHighAccuracy: true, timeout: 5000 }
+      )
     })
   }
 
+  const detectLocation = async () => {
+    setIsDetectingLocation(true)
+    try {
+      return await getCurrentLocationPromise()
+    } catch (e) {
+      console.error(e)
+      return null
+    } finally {
+      setIsDetectingLocation(false)
+    }
+  }
+
   // Persis logika map/page.tsx — hanya tambahan DB cafes di sidebar & peta
-  const handleSearch = async (overrideQuery?: string) => {
+  const handleSearch = async (overrideQuery?: string, overrideMode?: 'current' | 'surabaya') => {
     const activeQuery = typeof overrideQuery === 'string' ? overrideQuery : query
     const mapped = keywordMapping[activeQuery.toLowerCase()] || activeQuery || ""
+    const currentMode = overrideMode || localStorage.getItem('lastSearchMode') || 'surabaya'
+
+    let locToUse = userLocation
+    if (!locToUse) {
+      locToUse = await detectLocation() || null
+    }
 
     // Update URL query parameters without full reload
     const params = new URLSearchParams(window.location.search)
@@ -210,26 +292,63 @@ export default function MapComponent({ dbCafes, keywordMapping }: MapComponentPr
     } else {
       params.delete('q')
     }
+    params.set('mode', currentMode)
     router.replace(`${pathname}?${params.toString()}`, { scroll: false })
+    localStorage.setItem('lastSearchMode', currentMode)
 
     setSearching(true)
     setShowSuggestions(false)
+    
+    // Jika mode Surabaya & tidak ada pencarian kategori spesifik, cukup tampilkan default dari Database lokal
+    // untuk mencegah ratusan Pin Foursquare acak menumpuk di map secara sia-sia.
+    if (currentMode === 'surabaya' && !activeQuery) {
+      const defaultCafes = dbCafes.map((c: any) => ({
+        ...c,
+        isDb: true,
+        isFoursquare: false,
+        latitude: parseFloat(c.latitude),
+        longitude: parseFloat(c.longitude),
+        distance: 0,
+        relevance: 100,
+      }))
+      setCafes(defaultCafes)
+      setMapCenter([-7.32, 112.74]) // titik tengah kasaran Surabaya Selatan
+      setSearching(false)
+      try {
+        localStorage.setItem('lastSearchQuery', '')
+        localStorage.setItem('isDefaultSurabayaLoaded', 'true')
+        localStorage.removeItem('lastSearchCafes') // Bersihkan cache karena mengandalkan DB statis
+      } catch (e) {}
+      return
+    }
+
+    try {
+      localStorage.removeItem('isDefaultSurabayaLoaded')
+    } catch(e) {}
+    
     let allResults: any[] = []
 
-    // Tentukan pusat pencarian berdasarkan mode
-    const searchCenters = (searchMode === 'current' && userLocation)
-      ? [userLocation]
-      : [
-        [-7.2915, 112.7348], // Wonokromo
-        [-7.3385, 112.7297], // Gayungan
-        [-7.3244, 112.7139], // Wiyung
-        [-7.3507, 112.7013], // Karang Pilang
-        [-7.3082, 112.7704], // Tenggilis Mejoyo
-        [-7.3581, 112.7812], // Gunung Anyar
-        [-7.3167, 112.7425], // Jambangan
-        [-7.2874, 112.7189], // Dukuh Pakis
-        [-7.2752, 112.7284], // Sawahan
-      ]
+    let searchCenters = [
+      [-7.2915, 112.7348], // Wonokromo
+      [-7.3385, 112.7297], // Gayungan
+      [-7.3244, 112.7139], // Wiyung
+      [-7.3507, 112.7013], // Karang Pilang
+      [-7.3082, 112.7704], // Tenggilis Mejoyo
+      [-7.3581, 112.7812], // Gunung Anyar
+      [-7.3167, 112.7425], // Jambangan
+      [-7.2874, 112.7189], // Dukuh Pakis
+      [-7.2752, 112.7284], // Sawahan
+    ]
+
+    // Jika mode pencarian adalah current, tunggu geolocation jika belum ada
+    if (currentMode === 'current') {
+      if (locToUse) {
+        searchCenters = [locToUse]
+      } else {
+        const loc = await getCurrentLocationPromise()
+        searchCenters = [loc]
+      }
+    }
 
     const fetchPromises = searchCenters.map(center => fetchCafes(mapped, center[0], center[1], activeQuery))
     const resultsArrays = await Promise.all(fetchPromises)
@@ -383,7 +502,23 @@ export default function MapComponent({ dbCafes, keywordMapping }: MapComponentPr
             <div className="mb-4">
               <div className="bg-slate-50 p-1 rounded-2xl flex gap-1 mb-3 border border-slate-100">
                 <button
-                  onClick={() => setSearchMode('surabaya')}
+                  onClick={() => {
+                    setSearchMode('surabaya')
+                    setQuery('')
+                    localStorage.setItem('lastSearchMode', 'surabaya')
+                    const params = new URLSearchParams(window.location.search)
+                    params.set('mode', 'surabaya')
+                    params.delete('q')
+                    router.replace(`${pathname}?${params.toString()}`, { scroll: false })
+                    
+                    setCafes([])
+                    setMapCenter([-7.32, 112.74])
+                    try {
+                      localStorage.setItem('lastSearchQuery', '')
+                      localStorage.removeItem('lastSearchCafes')
+                      localStorage.removeItem('isDefaultSurabayaLoaded')
+                    } catch (e) {}
+                  }}
                   className={`flex-1 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all ${searchMode === 'surabaya'
                     ? 'bg-white text-blue-600 shadow-sm border border-blue-100'
                     : 'text-slate-400 hover:text-slate-600'
@@ -392,9 +527,27 @@ export default function MapComponent({ dbCafes, keywordMapping }: MapComponentPr
                   Surabaya Selatan
                 </button>
                 <button
-                  onClick={() => {
+                  onClick={async () => {
                     setSearchMode('current')
-                    if (!userLocation) detectLocation()
+                    setQuery('')
+                    localStorage.setItem('lastSearchMode', 'current')
+                    const params = new URLSearchParams(window.location.search)
+                    params.set('mode', 'current')
+                    params.delete('q')
+                    router.replace(`${pathname}?${params.toString()}`, { scroll: false })
+                    
+                    // Clear list first while loading location
+                    setCafes([])
+                    try {
+                      localStorage.setItem('lastSearchQuery', '')
+                      localStorage.removeItem('lastSearchCafes')
+                      localStorage.removeItem('isDefaultSurabayaLoaded')
+                    } catch (e) {}
+                    
+                    const locToUse = await detectLocation()
+                    if (locToUse) {
+                      setMapCenter(locToUse)
+                    }
                   }}
                   className={`flex-1 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all ${searchMode === 'current'
                     ? 'bg-white text-blue-600 shadow-sm border border-blue-100'
@@ -430,7 +583,10 @@ export default function MapComponent({ dbCafes, keywordMapping }: MapComponentPr
                     />
                     {query && (
                       <button
-                        onClick={() => { setQuery(''); setShowSuggestions(false) }}
+                        onClick={() => { 
+                          setQuery('')
+                          setShowSuggestions(false)
+                        }}
                         className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 rounded-full hover:bg-slate-200 transition-colors"
                       >
                         <X size={14} />
@@ -440,10 +596,15 @@ export default function MapComponent({ dbCafes, keywordMapping }: MapComponentPr
 
                   <button
                     onClick={detectLocation}
-                    className="bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-xl shrink-0 transition-colors"
+                    disabled={isDetectingLocation || searching}
+                    className="bg-blue-500 hover:bg-blue-600 disabled:bg-blue-400 text-white p-3 rounded-xl shrink-0 transition-colors flex items-center justify-center"
                     title="Deteksi Lokasi Saya"
                   >
-                    <Navigation size={18} />
+                    {isDetectingLocation ? (
+                      <Loader2 size={18} className="animate-spin" />
+                    ) : (
+                      <Navigation size={18} />
+                    )}
                   </button>
 
                   <button

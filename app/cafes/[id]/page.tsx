@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { ArrowLeft, Clock, ExternalLink, MapPin, Phone, ShieldCheck, Sparkles, Star, Utensils, Wifi } from 'lucide-react'
+import { Clock, ExternalLink, MapPin, Phone, ShieldCheck, Sparkles, Star, Utensils, Wifi } from 'lucide-react'
 import { prisma } from '@/lib/prisma'
 import RatingInput from '@/components/RatingInput'
 import CafeImageGallery from '@/components/CafeImageGallery'
+import BackButton from '@/components/BackButton'
 
 type CafeDetailPageProps = {
   params: Promise<{ id: string }>
@@ -62,10 +63,7 @@ export default async function CafeDetailPage({ params }: CafeDetailPageProps) {
     <main className="min-h-screen bg-slate-50 text-slate-800">
       <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
         <div className="mb-6 flex items-center justify-between gap-4">
-          <Link href="/map" className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-600 shadow-sm transition-colors hover:bg-slate-100">
-            <ArrowLeft size={16} />
-            Kembali ke Peta
-          </Link>
+          <BackButton />
 
           <span className={`rounded-full px-3 py-1 text-xs font-bold ${cafe.source === 'foursquare' ? 'bg-blue-100 text-blue-700' : 'bg-orange-100 text-orange-700'}`}>
             {cafe.source === 'foursquare' ? 'Foursquare' : 'SIG Terverifikasi'}
