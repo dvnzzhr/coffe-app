@@ -30,8 +30,10 @@ import { createSubmission, updateSubmission, cancelSubmission, getSubmissionById
 import { getPublicFacilities } from "@/app/dashboard/actions"
 import { useRouter, useSearchParams } from "next/navigation"
 import ConfirmModal from "@/components/ConfirmModal"
-
+import dynamic from "next/dynamic"
 import { Suspense } from "react"
+
+const LocationPickerMap = dynamic(() => import('@/components/LocationPickerMap'), { ssr: false })
 
 function NewSubmissionFormContent() {
   const router = useRouter()
@@ -547,6 +549,19 @@ function NewSubmissionFormContent() {
                   onChange={(e) => setFormData({ ...formData, longitude: e.target.value })}
                 />
               </div>
+            </div>
+            
+            {/* Interactive Map */}
+            <div className="mt-6 pt-6 border-t border-slate-100">
+              <p className="text-sm text-slate-500 font-medium mb-4 flex items-center gap-2">
+                <Info size={16} className="text-pink-500" />
+                Klik di peta untuk menentukan koordinat otomatis.
+              </p>
+              <LocationPickerMap 
+                latitude={formData.latitude}
+                longitude={formData.longitude}
+                onChange={(lat, lng) => setFormData(prev => ({ ...prev, latitude: lat, longitude: lng }))}
+              />
             </div>
           </div>
 
