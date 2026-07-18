@@ -24,6 +24,7 @@ interface MapSidebarProps {
   setMapCenter: (center: [number, number]) => void
   openCafeDetail: (cafe: any) => void
   detailLoadingHref: string | null
+  activeCafeId: string | null
 }
 
 const getCafeImage = (cafe: any) => cafe.images?.[0]?.url || ''
@@ -60,8 +61,33 @@ export default function MapSidebar({
   allCafes,
   setMapCenter,
   openCafeDetail,
-  detailLoadingHref
+  detailLoadingHref,
+  activeCafeId
 }: MapSidebarProps) {
+  const [filterRating, setFilterRating] = React.useState(false)
+  const [filterWiFi, setFilterWiFi] = React.useState(false)
+  const [filterOutdoor, setFilterOutdoor] = React.useState(false)
+
+  const finalCafes = React.useMemo(() => {
+    return allCafes.filter(cafe => {
+      if (filterRating && (cafe.rating || 0) < 4.0) return false;
+      const fac = String(cafe.facilities || "").toLowerCase();
+      const desc = String(cafe.description || "").toLowerCase();
+      if (filterWiFi && !fac.includes('wifi') && !desc.includes('wifi')) return false;
+      if (filterOutdoor && !fac.includes('outdoor') && !fac.includes('smoking') && !desc.includes('outdoor')) return false;
+      return true;
+    })
+  }, [allCafes, filterRating, filterWiFi, filterOutdoor])
+
+  React.useEffect(() => {
+    if (activeCafeId) {
+      const el = document.getElementById(`cafe-card-${activeCafeId}`)
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+      }
+    }
+  }, [activeCafeId])
+
   return (
     <div className={`transition-all duration-500 ease-in-out bg-white shadow-xl flex flex-col overflow-hidden relative z-[1000] ${showSidebar
       ? 'lg:w-[400px] h-[55vh] lg:h-full opacity-100'
@@ -129,6 +155,27 @@ export default function MapSidebar({
               </button>
             ))}
           </div>
+
+          <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t border-slate-100">
+            <button
+              onClick={() => setFilterRating(!filterRating)}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${filterRating ? 'bg-yellow-100 border-yellow-200 text-yellow-700' : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'}`}
+            >
+              ⭐ Rating 4.0+
+            </button>
+            <button
+              onClick={() => setFilterWiFi(!filterWiFi)}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${filterWiFi ? 'bg-blue-100 border-blue-200 text-blue-700' : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'}`}
+            >
+              📶 Free WiFi
+            </button>
+            <button
+              onClick={() => setFilterOutdoor(!filterOutdoor)}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${filterOutdoor ? 'bg-green-100 border-green-200 text-green-700' : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'}`}
+            >
+              🍃 Outdoor/Smoking
+            </button>
+          </div>
         </div>
 
         <div className="flex gap-4 mb-3 px-1">
@@ -144,9 +191,23 @@ export default function MapSidebar({
         </div>
 
         <div className="flex-1 overflow-y-auto pr-1">
-          {allCafes.length > 0 ? (
+          {searching ? (
             <div className="grid grid-cols-2 gap-3">
-              {allCafes.map((cafe) => {
+              {[1, 2, 3, 4, 5, 6].map(n => (
+                <div key={n} className="rounded-2xl border border-slate-100 bg-slate-50 overflow-hidden animate-pulse">
+                  <div className="aspect-[4/3] bg-slate-200"></div>
+                  <div className="p-2.5">
+                    <div className="h-4 bg-slate-200 rounded-md w-3/4 mb-2"></div>
+                    <div className="h-3 bg-slate-200 rounded-md w-full mb-1"></div>
+                    <div className="h-3 bg-slate-200 rounded-md w-1/2 mb-3"></div>
+                    <div className="h-6 bg-slate-200 rounded-xl w-full mt-2"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : finalCafes.length > 0 ? (
+            <div className="grid grid-cols-2 gap-3">
+              {finalCafes.map((cafe: any) => {
                 const imageUrl = getCafeImage(cafe)
                 const href = cafe.id || cafe.fsqPlaceId ? `/cafes/${encodeURIComponent(String(cafe.id || cafe.fsqPlaceId))}` : '#'
                 const rating = getCafeRating(cafe)
@@ -155,13 +216,14 @@ export default function MapSidebar({
 
                 return (
                   <article
+                    id={`cafe-card-${cafe.id || cafe.fsqPlaceId}`}
                     key={`sidebar-${cafe.id || cafe.fsqPlaceId}`}
                     onMouseEnter={() => {
                       if (!isNaN(cafe.latitude) && !isNaN(cafe.longitude)) {
                         setMapCenter([cafe.latitude, cafe.longitude])
                       }
                     }}
-                    className={`group overflow-hidden rounded-2xl border bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md ${cafe.isBestMatch ? 'border-green-200 ring-1 ring-green-100' : 'border-slate-100'
+                    className={`group overflow-hidden rounded-2xl border bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md ${activeCafeId === String(cafe.id || cafe.fsqPlaceId) ? 'border-blue-400 ring-2 ring-blue-100' : cafe.isBestMatch ? 'border-green-200 ring-1 ring-green-100' : 'border-slate-100'
                       }`}
                   >
                     <div className="aspect-[4/3] bg-slate-100 relative overflow-hidden">

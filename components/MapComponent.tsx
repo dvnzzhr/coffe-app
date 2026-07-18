@@ -13,6 +13,7 @@ import SearchBar from './SearchBar'
 const MapContainer = dynamic(() => import('react-leaflet').then(m => m.MapContainer), { ssr: false })
 const TileLayer = dynamic(() => import('react-leaflet').then(m => m.TileLayer), { ssr: false })
 const Marker = dynamic(() => import('react-leaflet').then(m => m.Marker), { ssr: false })
+
 const Popup = dynamic(() => import('react-leaflet').then(m => m.Popup), { ssr: false })
 const ZoomControl = dynamic(() => import('react-leaflet').then(m => m.ZoomControl), { ssr: false })
 
@@ -50,6 +51,9 @@ export default function MapComponent({ dbCafes, keywordMapping }: MapComponentPr
   const [searching, setSearching] = useState(false)
   const [isDetectingLocation, setIsDetectingLocation] = useState(false)
   const [searchMode, setSearchMode] = useState<'current' | 'surabaya'>('surabaya')
+  const [activeCafeId, setActiveCafeId] = useState<string | null>(null)
+  const [locationError, setLocationError] = useState<string | null>(null)
+  const [areaCenter, setAreaCenter] = useState<[number, number] | null>(null)
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [showSidebar, setShowSidebar] = useState(true)
@@ -277,7 +281,7 @@ export default function MapComponent({ dbCafes, keywordMapping }: MapComponentPr
   }
 
   // Persis logika map/page.tsx — hanya tambahan DB cafes di sidebar & peta
-  const handleSearch = async (overrideQuery?: string, overrideMode?: 'current' | 'surabaya') => {
+  const handleSearch = async (overrideQuery?: string, overrideMode?: 'current' | 'surabaya' | 'area', overrideCenter?: [number, number]) => {
     const activeQuery = typeof overrideQuery === 'string' ? overrideQuery : query
     const mapped = keywordMapping[activeQuery.toLowerCase()] || activeQuery || ""
     const currentMode = overrideMode || localStorage.getItem('lastSearchMode') || 'surabaya'
@@ -511,6 +515,7 @@ export default function MapComponent({ dbCafes, keywordMapping }: MapComponentPr
           setMapCenter={setMapCenter}
           openCafeDetail={openCafeDetail}
           detailLoadingHref={detailLoadingHref}
+          activeCafeId={activeCafeId}
         />
 
         {/* Map Area */}
@@ -574,6 +579,11 @@ export default function MapComponent({ dbCafes, keywordMapping }: MapComponentPr
             </div>
           )}
 
+          {locationError && (
+            <div className="absolute top-20 left-1/2 -translate-x-1/2 z-[2000] bg-yellow-50 text-yellow-700 px-4 py-3 rounded-xl shadow-lg border border-yellow-200 text-xs font-bold animate-pulse text-center">
+              {locationError}
+            </div>
+          )}
           <div className="h-full w-full">
             <MapContainer center={mapCenter} zoom={13} zoomControl={false} style={{ height: '100%', width: '100%' }}>
               <ZoomControl position="bottomleft" />

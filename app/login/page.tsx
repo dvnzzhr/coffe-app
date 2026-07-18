@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
-import { Lock, User, Loader2 } from "lucide-react"
+import { Lock, User, Loader2, ChevronLeft } from "lucide-react"
 
 export default function LoginPage() {
   const [username, setUsername] = useState("")
@@ -42,8 +42,18 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4">
-      <div className="w-full max-w-md">
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4 relative">
+      {/* Back Button */}
+      <div className="absolute top-6 left-6 hidden sm:block">
+        <Link 
+          href="/" 
+          className="flex items-center gap-2 text-slate-500 hover:text-blue-600 bg-white px-4 py-2 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-all font-bold text-sm"
+        >
+          <ChevronLeft size={18} /> Kembali ke Beranda
+        </Link>
+      </div>
+
+      <div className="w-full max-w-md mt-16 sm:mt-0">
         {/* Logo & Header */}
         <div className="text-center mb-8">
           <div className="relative mx-auto mb-4 h-20 w-20 overflow-hidden rounded-3xl bg-white shadow-xl shadow-pink-500/20 ring-1 ring-pink-100">
