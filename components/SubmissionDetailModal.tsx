@@ -20,7 +20,7 @@ export default function SubmissionDetailModal({
   if (!open || !submission) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/40 Z-50 flex items-center justify-center P-6">
+    <div className="fixed inset-0 bg-black/40 z-[3000] flex items-center justify-center p-6">
       <div className="bg-white text-slate-800 rounded-3xl w-full max-h-[90vh] overflow-y-auto p-8">
         <h2 className="text-2xl font-bold mb-6">Detail Pengajuan Cafe</h2>
 
@@ -122,14 +122,14 @@ export default function SubmissionDetailModal({
 
           <button
             onClick={onRevision}
-            className="bg-yellow-500 text-white px-5 py-2 rounded-xl"
+            className="bg-amber-500 text-white px-5 py-2 rounded-xl"
           >
             Revisi
           </button>
 
           <button
             onClick={onApprove}
-            className="bg-green-600 text-white px-5 py-2 rounded-xl"
+            className="bg-emerald-600 text-white px-5 py-2 rounded-xl"
           >
             Setujui
           </button>

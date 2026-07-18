@@ -4,12 +4,15 @@ import DashboardLayout from "@/components/DashboardLayout"
 import { CheckCircle, XCircle, Loader2, MapPin, ClipboardCheck, Info, Store } from "lucide-react"
 import { getPendingSubmissions, updateSubmissionStatus } from "./actions"
 import ConfirmModal from "@/components/ConfirmModal"
+import SubmissionDetailModal from "@/components/SubmissionDetailModal"
+import { Eye } from "lucide-react"
 
 export default function ApprovalPage() {
   const [submissions, setSubmissions] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [processingId, setProcessingId] = useState<number | null>(null)
   const [revisionNote, setRevisionNote] = useState("")
+  const [detailSubmission, setDetailSubmission] = useState<any>(null)
   const [confirmAction, setConfirmAction] = useState<{ isOpen: boolean; id: number | null; status: "Disetujui" | "Ditolak" | "Revisi" | null }>({
     isOpen: false,
     id: null,
@@ -128,6 +131,14 @@ export default function ApprovalPage() {
                     <Info size={18} />
                     Revisi
                   </button>
+                  <button
+                    disabled={processingId === item.id}
+                    onClick={() => setDetailSubmission(item)}
+                    className="flex-1 flex items-center justify-center gap-2 bg-pink-50 text-pink-600 border border-pink-200 hover:bg-pink-100 font-bold py-3 px-6 rounded-2xl transition-all active:scale-95 disabled:opacity-50"
+                  >
+                    <Eye size={18} />
+                    Detail
+                  </button>
                 </div>
               </div>
             </div>
@@ -183,6 +194,14 @@ export default function ApprovalPage() {
           </div>
         )}
       </ConfirmModal>
+    <SubmissionDetailModal
+        open={!!detailSubmission}
+        submission={detailSubmission}
+        onClose={() => setDetailSubmission(null)}
+        onApprove={() => { setConfirmAction({ isOpen: true, id: detailSubmission.id, status: "Disetujui" }); setDetailSubmission(null); }}
+        onReject={() => { setConfirmAction({ isOpen: true, id: detailSubmission.id, status: "Ditolak" }); setDetailSubmission(null); }}
+        onRevision={() => { setConfirmAction({ isOpen: true, id: detailSubmission.id, status: "Revisi" }); setDetailSubmission(null); }}
+      />
     </DashboardLayout>
   )
 }
