@@ -44,8 +44,8 @@ export default function LandingPage() {
 
           <div className="hidden md:flex items-center gap-8 text-sm font-bold text-slate-500">
             <a href="#map" className="hover:text-pink-600 transition-colors">Eksplorasi Peta</a>
-            <a href="#" className="hover:text-pink-600 transition-colors">Tentang SIG</a>
-            <a href="#" className="hover:text-pink-600 transition-colors">Bantuan</a>
+            <Link href="/about" className="hover:text-pink-600 transition-colors">Tentang SIG</Link>
+            <Link href="/help" className="hover:text-pink-600 transition-colors">Bantuan</Link>
           </div>
 
           <div className="flex items-center gap-3">
