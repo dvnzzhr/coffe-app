@@ -390,7 +390,9 @@ export async function GET(req: Request) {
     })
     console.log(`Owner DB results for "${query}" / "${rawQuery}":`, ownerResults.length)
 
-    const normalizedOwner: CafeResult[] = ownerResults.map((c: SubmissionWithImages) => {
+    const normalizedOwner: CafeResult[] = ownerResults.map((c: any) => {
+      // Remove vector embedding payload before sending to client for payload economy
+      delete c.embeddingData;
       const cLat = parseFloat(c.latitude)
       const cLng = parseFloat(c.longitude)
       return {

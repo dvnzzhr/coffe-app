@@ -11,7 +11,7 @@ interface MapSidebarProps {
   setSearchMode: (mode: 'surabaya' | 'current') => void
   query: string
   setQuery: (val: string) => void
-  handleSearch: () => void
+  handleSearch: (overrideQuery?: string, overrideMode?: 'current' | 'surabaya' | 'area', overrideCenter?: [number, number]) => void
   showSuggestions: boolean
   setShowSuggestions: (val: boolean) => void
   filteredSuggestions: string[]
@@ -64,9 +64,26 @@ export default function MapSidebar({
   detailLoadingHref,
   activeCafeId
 }: MapSidebarProps) {
-  const [filterRating, setFilterRating] = React.useState(false)
-  const [filterWiFi, setFilterWiFi] = React.useState(false)
-  const [filterOutdoor, setFilterOutdoor] = React.useState(false)
+  const [filterRating, setFilterRating] = React.useState(() => {
+    if (typeof window !== 'undefined') return sessionStorage.getItem('mapFilterRating') === 'true'
+    return false
+  })
+  const [filterWiFi, setFilterWiFi] = React.useState(() => {
+    if (typeof window !== 'undefined') return sessionStorage.getItem('mapFilterWiFi') === 'true'
+    return false
+  })
+  const [filterOutdoor, setFilterOutdoor] = React.useState(() => {
+    if (typeof window !== 'undefined') return sessionStorage.getItem('mapFilterOutdoor') === 'true'
+    return false
+  })
+
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+       sessionStorage.setItem('mapFilterRating', String(filterRating))
+       sessionStorage.setItem('mapFilterWiFi', String(filterWiFi))
+       sessionStorage.setItem('mapFilterOutdoor', String(filterOutdoor))
+    }
+  }, [filterRating, filterWiFi, filterOutdoor])
 
   const finalCafes = React.useMemo(() => {
     return allCafes.filter(cafe => {
@@ -95,6 +112,19 @@ export default function MapSidebar({
       } ${isFullscreen ? 'lg:rounded-none' : 'rounded-3xl'}`}>
 
       <div className="p-3 lg:p-4 flex flex-col h-full min-w-[320px]">
+        {isFullscreen && (
+          <div className="mb-4">
+            <a 
+              href="/"
+              className="inline-flex bg-white border border-slate-200 pl-3 pr-4 py-2 rounded-xl shadow-sm hover:bg-slate-50 transition-all text-slate-700 items-center justify-start gap-2 font-bold text-xs"
+            >
+              <div className="bg-slate-100 p-1 rounded-md">
+                <Search size={14} className="text-slate-500" />
+              </div>
+              Kembali ke Beranda
+            </a>
+          </div>
+        )}
         <h1 className="text-lg lg:text-xl font-bold text-slate-700 mb-2 lg:mb-4">
           Café Recommendation
         </h1>
@@ -104,6 +134,7 @@ export default function MapSidebar({
             <button
               onClick={() => {
                 setSearchMode('surabaya')
+                handleSearch(query, 'surabaya')
               }}
               className={`flex-1 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all ${searchMode === 'surabaya'
                 ? 'bg-white text-pink-600 shadow-sm border border-pink-100'
@@ -115,6 +146,7 @@ export default function MapSidebar({
             <button
               onClick={() => {
                 setSearchMode('current')
+                handleSearch(query, 'current')
               }}
               className={`flex-1 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all ${searchMode === 'current'
                 ? 'bg-white text-pink-600 shadow-sm border border-pink-100'

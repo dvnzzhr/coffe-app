@@ -6,7 +6,8 @@ export async function getPendingSubmissions() {
   try {
     return await prisma.submission.findMany({
       where: { status: "Pending" },
-      orderBy: { createdAt: 'asc' }
+      orderBy: { createdAt: 'asc' },
+      include: { images: true }
     })
   } catch (error) {
     console.error("Failed to fetch pending submissions:", error)

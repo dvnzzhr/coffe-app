@@ -1,5 +1,6 @@
 import "./globals.css"; // Pastikan path ini benar!
 import AuthProvider from "@/components/AuthProvider"
+import RootProvider from "@/components/RootProvider";
 
 export default function RootLayout({
   children,
@@ -7,9 +8,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
-        <AuthProvider>{children}</AuthProvider>
+        <RootProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </RootProvider>
       </body>
     </html>
   );

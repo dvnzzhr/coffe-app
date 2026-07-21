@@ -57,7 +57,8 @@ export default function LocationPickerMap({ latitude, longitude, onChange }: Loc
   const centerPosition: [number, number] = hasValidPosition ? [parsedLat, parsedLng] : defaultPosition
 
   useEffect(() => {
-    setMounted(true)
+    const timer = setTimeout(() => setMounted(true), 0)
+    return () => clearTimeout(timer)
   }, [])
 
   if (!mounted) {

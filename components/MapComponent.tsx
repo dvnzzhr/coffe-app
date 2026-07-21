@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic'
 import 'leaflet/dist/leaflet.css'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { Search, Navigation, ShieldCheck, Star, X, Maximize, Minimize, PanelLeftClose, PanelLeftOpen, Map as MapIcon, Loader2, Sparkles } from 'lucide-react'
+import { Maximize, Minimize, PanelLeftClose, PanelLeftOpen, Map as MapIcon, Loader2, Sparkles } from 'lucide-react'
 import { fetchCafes } from '@/lib/foursquare'
 import MapSidebar from './MapSidebar'
 import SearchBar from './SearchBar'
@@ -160,7 +160,7 @@ export default function MapComponent({ dbCafes, keywordMapping }: MapComponentPr
       setSearchMode(initialMode)
       if (initialMode === 'current' && !userLocation) detectLocation()
     } else {
-      const cachedMode = localStorage.getItem('lastSearchMode') as 'current' | 'surabaya'
+      const cachedMode = sessionStorage.getItem('lastSearchMode') as 'current' | 'surabaya'
       if (cachedMode) {
         setSearchMode(cachedMode)
         if (cachedMode === 'current' && !userLocation) detectLocation()
@@ -182,63 +182,43 @@ export default function MapComponent({ dbCafes, keywordMapping }: MapComponentPr
     }
 
     try {
-      // Guard: clear oversized cache that could crash the page (>500KB)
-      const cachedCafes = localStorage.getItem('lastSearchCafes')
-      if (cachedCafes && cachedCafes.length > 500_000) {
-        localStorage.removeItem('lastSearchCafes')
-        localStorage.removeItem('lastSearchQuery')
-      }
+      // Cache limit removed for large data
+      const cachedCafes = sessionStorage.getItem('lastSearchCafes')
 
-      const cachedQuery = localStorage.getItem('lastSearchQuery')
-      const freshCafes = localStorage.getItem('lastSearchCafes')
+      const cachedQuery = sessionStorage.getItem('lastSearchQuery')
+      const freshCafes = sessionStorage.getItem('lastSearchCafes')
 
-      if (initialQ) {
-        setQuery(initialQ)
-        if (cachedQuery === initialQ && freshCafes) {
+      if (initialQ || initialMode === 'current') {
+        const expectedQuery = initialQ || ''
+        if (cachedQuery === expectedQuery && freshCafes) {
+          setQuery(expectedQuery)
           setCafes(JSON.parse(freshCafes))
           return
         } else {
-          handleSearch(initialQ)
-          return
-        }
-      } else if (cachedQuery !== null && freshCafes) {
-        setQuery(cachedQuery)
-        setCafes(JSON.parse(freshCafes))
-        
-        if (cachedQuery) {
-          params.set('q', cachedQuery)
-        } else {
-          params.delete('q')
-        }
-        
-        const mode = initialMode || localStorage.getItem('lastSearchMode') || 'surabaya'
-        params.set('mode', mode)
-        router.replace(`${pathname}?${params.toString()}`, { scroll: false })
-        return
-      } else {
-        const mode = initialMode || localStorage.getItem('lastSearchMode') || 'surabaya'
-        const isDefaultLoaded = localStorage.getItem('isDefaultSurabayaLoaded') === 'true'
-        if (mode === 'surabaya' && isDefaultLoaded) {
-          loadDefaultCafes()
+          setQuery(expectedQuery)
+          handleSearch(expectedQuery, initialMode === 'current' ? 'current' : 'surabaya')
           return
         }
       }
 
-      // Belum ada pencarian
-      setCafes([])
+      // No query and no current mode = Default state (Home visit)
+      setQuery('')
+      setSearchMode(initialMode === 'surabaya' ? 'surabaya' : 'surabaya')
+      loadDefaultCafes()
+      return
 
     } catch (e) {
-      // If localStorage is corrupt or inaccessible, clear it and move on
+      // If sessionStorage is corrupt or inaccessible, clear it and move on
       try {
-        localStorage.removeItem('lastSearchCafes')
-        localStorage.removeItem('lastSearchQuery')
+        sessionStorage.removeItem('lastSearchCafes')
+        sessionStorage.removeItem('lastSearchQuery')
       } 
       catch { /* ignore */ }
       
       if (initialQ) {
         handleSearch(initialQ)
       } else {
-        const isDefaultLoaded = localStorage.getItem('isDefaultSurabayaLoaded') === 'true'
+        const isDefaultLoaded = sessionStorage.getItem('isDefaultSurabayaLoaded') === 'true'
         if (isDefaultLoaded) loadDefaultCafes()
         else setCafes([])
       }
@@ -247,7 +227,7 @@ export default function MapComponent({ dbCafes, keywordMapping }: MapComponentPr
 
   const getCurrentLocationPromise = (): Promise<[number, number]> => {
     return new Promise((resolve) => {
-      // Selalu ambil posisi terbaru, dan wajib pusatkan peta (setMapCenter)
+      // Get current position and recenter map
       navigator.geolocation.getCurrentPosition(
         (pos) => {
           const lat = pos.coords.latitude
@@ -284,7 +264,7 @@ export default function MapComponent({ dbCafes, keywordMapping }: MapComponentPr
   const handleSearch = async (overrideQuery?: string, overrideMode?: 'current' | 'surabaya' | 'area', overrideCenter?: [number, number]) => {
     const activeQuery = typeof overrideQuery === 'string' ? overrideQuery : query
     const mapped = keywordMapping[activeQuery.toLowerCase()] || activeQuery || ""
-    const currentMode = overrideMode || localStorage.getItem('lastSearchMode') || 'surabaya'
+    const currentMode = overrideMode || sessionStorage.getItem('lastSearchMode') || 'surabaya'
 
     let locToUse = userLocation
     if (!locToUse) {
@@ -300,7 +280,7 @@ export default function MapComponent({ dbCafes, keywordMapping }: MapComponentPr
     }
     params.set('mode', currentMode)
     router.replace(`${pathname}?${params.toString()}`, { scroll: false })
-    localStorage.setItem('lastSearchMode', currentMode)
+    sessionStorage.setItem('lastSearchMode', currentMode)
 
     setSearching(true)
     setShowSuggestions(false)
@@ -321,15 +301,15 @@ export default function MapComponent({ dbCafes, keywordMapping }: MapComponentPr
       setMapCenter([-7.32, 112.74]) // titik tengah kasaran Surabaya Selatan
       setSearching(false)
       try {
-        localStorage.setItem('lastSearchQuery', '')
-        localStorage.setItem('isDefaultSurabayaLoaded', 'true')
-        localStorage.removeItem('lastSearchCafes') // Bersihkan cache karena mengandalkan DB statis
+        sessionStorage.setItem('lastSearchQuery', '')
+        sessionStorage.setItem('isDefaultSurabayaLoaded', 'true')
+        sessionStorage.removeItem('lastSearchCafes') // Bersihkan cache karena mengandalkan DB statis
       } catch (e) {}
       return
     }
 
     try {
-      localStorage.removeItem('isDefaultSurabayaLoaded')
+      sessionStorage.removeItem('isDefaultSurabayaLoaded')
     } catch(e) {}
     
     let allResults: any[] = []
@@ -475,21 +455,21 @@ export default function MapComponent({ dbCafes, keywordMapping }: MapComponentPr
       }))
 
     try {
-      // Limit to top 50 results to avoid localStorage QuotaExceededError
+      // Limit to top 50 results to avoid sessionStorage QuotaExceededError
       const toCache = normalized.slice(0, 50)
-      localStorage.setItem('lastSearchQuery', activeQuery)
-      localStorage.setItem('lastSearchCafes', JSON.stringify(toCache))
+      sessionStorage.setItem('lastSearchQuery', activeQuery)
+      sessionStorage.setItem('lastSearchCafes', JSON.stringify(toCache))
     } catch (e) {
       // If quota is still exceeded, clear stale cache and try again with fewer items
       try {
-        localStorage.removeItem('lastSearchCafes')
-        localStorage.removeItem('lastSearchQuery')
+        sessionStorage.removeItem('lastSearchCafes')
+        sessionStorage.removeItem('lastSearchQuery')
         const toCache = normalized.slice(0, 20)
-        localStorage.setItem('lastSearchQuery', activeQuery)
-        localStorage.setItem('lastSearchCafes', JSON.stringify(toCache))
+        sessionStorage.setItem('lastSearchQuery', activeQuery)
+        sessionStorage.setItem('lastSearchCafes', JSON.stringify(toCache))
       } catch {
         // If still failing, just skip caching — don't crash the page
-        console.warn('localStorage quota exceeded, search results will not be cached.')
+        console.warn('sessionStorage quota exceeded, search results will not be cached.')
       }
     }
 

@@ -62,8 +62,8 @@ export async function createSubmission(data: any) {
       phone, openingHours, ambiance, menuDescription, description 
     } = data
     
-    const count = await prisma.submission.count()
-    const reqNumber = `REQ-${(count + 1).toString().padStart(3, '0')}`
+    // Menggunakan kombinasi waktu dan acak (random) untuk menghindari 'Unique Constraint Failed' jika data pernah dihapus
+    const reqNumber = `REQ-${Date.now().toString().slice(-5)}${Math.floor(Math.random() * 100)}`
 
     const submission = await prisma.submission.create({
       data: {
